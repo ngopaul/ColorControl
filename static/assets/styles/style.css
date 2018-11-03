@@ -1,0 +1,77 @@
+html {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+body {
+    margin: 0;
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+    transition: background-color ease 0.5s;
+    background-color: #ccc;
+}
+#spine-1 {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%);
+}
+#spine-2 {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+
+.button {
+    width: 50px;
+    height: 50px;
+    margin: 20px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 20%;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    transition: transform ease 0.2s;
+}
+.button:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+/**
+ * colors
+ */
+
+#button-red {
+    background: #EF476F;
+}
+#button-orange {
+    background: orange;
+}
+#button-yellow {
+    background: #FFD166;
+}
+#button-pink {
+    background: pink;
+}
+#button-green {
+    background: #06D6A0;
+}
+#button-aqua {
+    background: aqua;
+}
+#button-lightblue {
+    background: #118AB2;
+}
+#button-blue {
+    background: #073B4C;
+}
+#button-purple {
+    background: purple;
+}
+#button-white {
+    background: white;
+}
