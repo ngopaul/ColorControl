@@ -6,11 +6,6 @@ import os
 import subprocess
 import re
 
-#os.system("sudo killall pigpiod")
-#os.system("sudo pigpiod")
-#os.system("sudo killall pigpiod")
-#os.system("sudo pipiod")
-
 pi = pigpio.pi()
 
 app = Flask(__name__)
@@ -107,8 +102,6 @@ def on(color):
 def flash(color, hi_time, lo_time):
     if not color in colors:
         return render_template('main.html')
-    #hi_time = int(hi_time)
-    #lo_time = int(lo_time)
     clear_lights()
 
     os.system("python3 features.py "+ color + " " + hi_time + " " + lo_time + " &")
@@ -130,14 +123,10 @@ def custom_pwm(pin, duty, length):
     return toReturn
 
 def get_lit(color):
-    #rgb = [(color / 255.0) * 100 for color in d]
     color_dict = colors[color]
     pi.set_PWM_dutycycle(23, color_dict['red'])
     pi.set_PWM_dutycycle(24, color_dict['green'])
     pi.set_PWM_dutycycle(25, color_dict['blue'])
-    #r.ChangeDutyCycle((color_dict['red']/ 255.0) * 100 )
-    #g.ChangeDutyCycle((color_dict['green']/ 255.0) * 100 )
-    #b.ChangeDutyCycle((color_dict['blue']/ 255.0) * 100 )
 
 @app.route('/off/', methods=['GET', 'POST'])
 def off():

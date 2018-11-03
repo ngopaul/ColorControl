@@ -1,27 +1,26 @@
-<!DOCTYPE html>
-<head>
-   	<title>Current Status</title>
-</head>
-
-<body>
-   <h1>WOOHOO</h1>
-
-
-   <h2>RGB Input:</h2>
-
-   <form action="/on/" method="POST">
-	<span style="color:red">Red</span>:
-	<input type="text" name="red" value={{ red }}> 
-	<br>
-	<span style="color:green">Green:</span>
-        <input type="text" name="green" value={{ green }}>
-	<br>
-	<span style="color:blue">Blue:</span>
-	<input type="text" name="blue" value={{ blue }}>
-	<br>
-	<br>
-	<input type="submit" value="Submit">
-   </form>
-
-</body>
+<html>
+	<head>
+		<title>Color Control</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/styles/style.css') }}" />
+	</head>
+	<body>
+		<div id="container">
+			<div id="spine-1">
+				<div id="button-red" class="button"></div>
+				<div id="button-yellow" class="button"></div>				
+				<div id="button-green" class="button"></div>				
+				<div id="button-lightblue" class="button"></div>
+				<div id="button-blue" class="button"></div>				
+			</div>
+			<div id="spine-2">
+				<div id="button-white" class="button"></div>
+				<div id="button-orange" class="button"></div>				
+				<div id="button-purple" class="button"></div>				
+				<div id="button-aqua" class="button"></div>			
+				<div id="button-pink" class="button"></div>
+			</div>
+		</div>
+		<!-- would usually put the <script> in <head> -->
+		<script type="text/javascript" src="{{ url_for('static', filename='assets/scripts/color_control.js' )}}"></script>
+	</body>
 </html>
