@@ -1,0 +1,171 @@
+from flask import Flask, render_template, request
+import time
+import RPi.GPIO as GPIO
+import pigpio
+import os
+
+#os.system("sudo killall pigpiod")
+#os.system("sudo pigpiod")
+#os.system("sudo killall pigpiod")
+#os.system("sudo pipiod")
+
+pi = pigpio.pi()
+
+app = Flask(__name__)
+
+GPIO.setmode(GPIO.BCM)
+
+pins = {
+   23 : {'name' : 'Red', 'state' : GPIO.LOW}, 
+   24 : {'name' : 'Green', 'state' : GPIO.LOW},
+   25 : {'name' : 'Blue', 'state' : GPIO.LOW}
+}
+
+GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+frequency = 70
+#r = GPIO.PWM(23, frequency)
+#g = GPIO.PWM(24, frequency)
+#b = GPIO.PWM(25, frequency)
+
+def clear_lights():
+    pi.wave_clear()
+    pi.set_mode(23, pigpio.OUTPUT)
+    pi.set_mode(24, pigpio.OUTPUT)
+    pi.set_mode(25, pigpio.OUTPUT)
+
+    pi.set_PWM_frequency(23, frequency)
+    pi.set_PWM_frequency(24, frequency)
+    pi.set_PWM_frequency(25, frequency)
+
+    pi.set_PWM_dutycycle(23, 0)
+    pi.set_PWM_dutycycle(24, 0)
+    pi.set_PWM_dutycycle(25, 0)
+
+clear_lights()
+
+def convert(color):
+    color['green'] *= 200/255
+    color['blue'] *= 150/255
+    return color
+
+colors = {
+    # White (255. 200, 150)
+    'white': {'red': 255.0, 'green': 200.0, 'blue': 150.0},
+
+    # Red (255, 0, 0)
+    'red' : convert({'red': 255.0, 'green': 0.0, 'blue': 0.0}), 
+
+    # Yellow (255, 255, 0)
+    'yellow' : convert({'red': 255.0, 'green': 255.0, 'blue': 0.0}), 
+
+    # Orange (255. 87, 51)
+    'orange' : convert({'red': 255.0, 'green': 87.0, 'blue': 51.0}),
+
+    # Green (0, 255, 0)
+    'green' : convert({'red': 0.0, 'green': 255.0, 'blue': 0.0}),
+
+    # Aqua (0, 255, 255)
+    'aqua' : convert({'red': 0.0, 'green': 255.0, 'blue': 255.0}),
+
+    # Blue (0, 0, 255)
+    'blue' : convert({'red': 0.0, 'green': 0.0, 'blue': 255.0}),
+
+    # Pink (255, 0, 255)
+    'pink' : convert({'red': 255.0, 'green': 0.0, 'blue': 255.0}),
+
+    # Purple/Violet (128, 0, 128)
+    'purple' : convert({'red': 128.0, 'green': 0.0, 'blue': 128.0}),
+
+    # Navy (0, 0, 128)
+    'navy' : convert({'red': 0.0, 'green': 0.0, 'blue': 128.0}),
+}
+
+# Goal: Web Requests will initiate GPIO methods
+@app.route("/", methods=['GET', 'POST'])
+def main():
+   return render_template('main.html')
+
+@app.route('/on/<color>', methods=['GET', 'POST'])
+def on(color):
+    clear_lights()
+    print(color)
+    color = color.lower()
+    pi.set_PWM_dutycycle(23, 0)
+    pi.set_PWM_dutycycle(24, 0)
+    pi.set_PWM_dutycycle(25, 0)
+    if color in colors:
+        get_lit(colors[color])
+    return render_template('main.html')
+
+@app.route('/flash/<color>/<hi_time>/<lo_time>', methods=['GET', 'POST'])
+def flash(color, hi_time, lo_time):
+    if not color in colors:
+        return
+    hi_time = int(hi_time)
+    lo_time = int(lo_time)
+    clear_lights()
+
+    while not GPIO.input(18):
+        get_lit(colors[color])
+        time.sleep(hi_time/1000)
+        clear_lights()
+        time.sleep(lo_time/1000)
+
+    #create red waveform
+    #pi.wave_clear()
+    #pi.wave_add_generic([pigpio.pulse(0, 0, hi_time), pigpio.pulse(0, 1<<23, lo_time)])
+    #pi.wave_add_generic(custom_pwm(23, int(colors[color]['red']), hi_time)+[pigpio.pulse(0, 1<<23, lo_time)])
+    #red = pi.wave_create()
+
+    #create green
+    #pi.wave_add_generic([pigpio.pulse(0, 1<<24, lo_time)])
+    #pi.wave_add_generic(custom_pwm(24, int(colors[color]['green']), hi_time)+[pigpio.pulse(0, 1<<24, lo_time)])
+    #green = pi.wave_create()
+
+    #create blue
+    #pi.wave_add_generic([pigpio.pulse(0, 1<<25, lo_time)])
+    #pi.wave_add_generic(custom_pwm(25, int(colors[color]['blue']), hi_time)+[pigpio.pulse(0, 1<<25, lo_time)])
+    #blue = pi.wave_create()
+
+    #send waveforms
+    #pi.wave_send_repeat(red)
+    #pi.wave_send_repeat(green)
+    #pi.wave_send_repeat(blue)
+
+    #pi.wave_tx_stop()
+    #pi.wave_tx_stop()
+    #pi.wave_tx_stop()
+    #pi.wave_clear()
+
+    #pi.wave_send_repeat(wid)
+    return render_template('main.html')
+
+def custom_pwm(pin, duty, length):
+    print(length-2650)
+    toReturn = [pigpio.pulse(1<<pin, 0, duty*10), pigpio.pulse(0, 1<<pin, 2560 - duty*10)] * max(length - 2560, 1)
+    return toReturn
+
+def get_lit(color_dict):
+    #rgb = [(color / 255.0) * 100 for color in d]
+    pi.set_PWM_dutycycle(23, color_dict['red'])
+    pi.set_PWM_dutycycle(24, color_dict['green'])
+    pi.set_PWM_dutycycle(25, color_dict['blue'])
+    #r.ChangeDutyCycle((color_dict['red']/ 255.0) * 100 )
+    #g.ChangeDutyCycle((color_dict['green']/ 255.0) * 100 )
+    #b.ChangeDutyCycle((color_dict['blue']/ 255.0) * 100 )
+
+@app.route('/off/', methods=['GET', 'POST'])
+def off():
+    print('Turning off the lights')
+    clear_lights()
+    pi.set_PWM_dutycycle(23, 0)
+    pi.set_PWM_dutycycle(24, 0)
+    pi.set_PWM_dutycycle(25, 0)
+    return render_template('main.html')
+
+
+if __name__ == "__main__":
+   app.run(host='0.0.0.0', debug=True)
+
+   
