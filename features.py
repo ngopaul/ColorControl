@@ -1,10 +1,12 @@
-from . import app
+import app
 import time
 import sys
 
 def flash(color, hi_time, lo_time):
+    hi_time = int(hi_time)
+    lo_time = int(lo_time)
     while True:
-        app.get_lit(color_dict)
+        app.get_lit(color)
         time.sleep(hi_time/1000)
         app.clear_lights()
         time.sleep(lo_time/1000)

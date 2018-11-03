@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 import pigpio
 import os
 import subprocess
+import re
 
 #os.system("sudo killall pigpiod")
 #os.system("sudo pigpiod")
@@ -25,11 +26,14 @@ pins = {
 GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 frequency = 70
-#r = GPIO.PWM(23, frequency)
-#g = GPIO.PWM(24, frequency)
-#b = GPIO.PWM(25, frequency)
+need_to_kill = False
+PID = ""
 
 def clear_lights():
+    global need_to_kill
+    if need_to_kill:
+        os.system("kill " + PID)
+        need_to_kill = False
     pi.wave_clear()
     pi.set_mode(23, pigpio.OUTPUT)
     pi.set_mode(24, pigpio.OUTPUT)
@@ -96,36 +100,38 @@ def on(color):
     pi.set_PWM_dutycycle(24, 0)
     pi.set_PWM_dutycycle(25, 0)
     if color in colors:
-        get_lit(colors[color])
+        get_lit(color)
     return render_template('main.html')
 
 @app.route('/flash/<color>/<hi_time>/<lo_time>', methods=['GET', 'POST'])
 def flash(color, hi_time, lo_time):
     if not color in colors:
-        return
-    hi_time = int(hi_time)
-    lo_time = int(lo_time)
+        return render_template('main.html')
+    #hi_time = int(hi_time)
+    #lo_time = int(lo_time)
     clear_lights()
 
-    x = subprocess.Popen(['ps', '-ef', '|', 'grep', 'app.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-    out, err = x.communicate()
-    print(out)
+    os.system("python3 features.py "+ color + " " + hi_time + " " + lo_time + " &")
 
-    #while not GPIO.input(18):
-    #    get_lit(colors[color])
-    #    time.sleep(hi_time/1000)
-    #    clear_lights()
-    #    time.sleep(lo_time/1000)
+    y = subprocess.check_output(['pidof', 'python3'])
+    print(y)
+
+    global need_to_kill, PID
+    need_to_kill = True
+    print(PID)
+    PID = str(y).split(' ')[0][2:]
 
     return render_template('main.html')
+
 
 def custom_pwm(pin, duty, length):
     print(length-2650)
     toReturn = [pigpio.pulse(1<<pin, 0, duty*10), pigpio.pulse(0, 1<<pin, 2560 - duty*10)] * max(length - 2560, 1)
     return toReturn
 
-def get_lit(color_dict):
+def get_lit(color):
     #rgb = [(color / 255.0) * 100 for color in d]
+    color_dict = colors[color]
     pi.set_PWM_dutycycle(23, color_dict['red'])
     pi.set_PWM_dutycycle(24, color_dict['green'])
     pi.set_PWM_dutycycle(25, color_dict['blue'])
