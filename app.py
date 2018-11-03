@@ -107,7 +107,7 @@ def flash(color, hi_time, lo_time):
     lo_time = int(lo_time)
     clear_lights()
 
-    x = subprocess.Popen(['ps', '-f', '|', 'grep', 'app.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    x = subprocess.Popen(['ps', '-ef', '|', 'grep', 'app.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     out, err = x.communicate()
     print(out)
 
