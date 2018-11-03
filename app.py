@@ -28,6 +28,9 @@ GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 frequency = 70
 need_to_kill = False
 PID = ""
+current_color = ""
+current_times = [0, 0]
+
 
 def clear_lights():
     global need_to_kill
@@ -101,12 +104,17 @@ def on(color):
     pi.set_PWM_dutycycle(25, 0)
     if color in colors:
         get_lit(color)
+        global current_color
+        current_color = color
     return render_template('main.html')
 
 @app.route('/flash/<color>/<hi_time>/<lo_time>', methods=['GET', 'POST'])
 def flash(color, hi_time, lo_time):
     if not color in colors:
         return render_template('main.html')
+    global current_color, current_times
+    current_color = color
+    current_times = [hi_time, lo_time]
     #hi_time = int(hi_time)
     #lo_time = int(lo_time)
     clear_lights()
@@ -122,7 +130,6 @@ def flash(color, hi_time, lo_time):
     PID = str(y).split(' ')[0][2:]
 
     return render_template('main.html')
-
 
 def custom_pwm(pin, duty, length):
     print(length-2650)
@@ -143,6 +150,8 @@ def get_lit(color):
 def off():
     print('Turning off the lights')
     clear_lights()
+    global current_color
+    current_color = ""
     pi.set_PWM_dutycycle(23, 0)
     pi.set_PWM_dutycycle(24, 0)
     pi.set_PWM_dutycycle(25, 0)
@@ -151,5 +160,3 @@ def off():
 
 if __name__ == "__main__":
    app.run(host='0.0.0.0', debug=True)
-
-   
