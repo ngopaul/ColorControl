@@ -3,6 +3,7 @@ import time
 import RPi.GPIO as GPIO
 import pigpio
 import os
+import subprocess
 
 #os.system("sudo killall pigpiod")
 #os.system("sudo pigpiod")
@@ -106,39 +107,16 @@ def flash(color, hi_time, lo_time):
     lo_time = int(lo_time)
     clear_lights()
 
-    while not GPIO.input(18):
-        get_lit(colors[color])
-        time.sleep(hi_time/1000)
-        clear_lights()
-        time.sleep(lo_time/1000)
+    x = subprocess.Popen(['ps', '-f', '|', 'grep', 'app.py'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    out, err = x.communicate()
+    print(out)
 
-    #create red waveform
-    #pi.wave_clear()
-    #pi.wave_add_generic([pigpio.pulse(0, 0, hi_time), pigpio.pulse(0, 1<<23, lo_time)])
-    #pi.wave_add_generic(custom_pwm(23, int(colors[color]['red']), hi_time)+[pigpio.pulse(0, 1<<23, lo_time)])
-    #red = pi.wave_create()
+    #while not GPIO.input(18):
+    #    get_lit(colors[color])
+    #    time.sleep(hi_time/1000)
+    #    clear_lights()
+    #    time.sleep(lo_time/1000)
 
-    #create green
-    #pi.wave_add_generic([pigpio.pulse(0, 1<<24, lo_time)])
-    #pi.wave_add_generic(custom_pwm(24, int(colors[color]['green']), hi_time)+[pigpio.pulse(0, 1<<24, lo_time)])
-    #green = pi.wave_create()
-
-    #create blue
-    #pi.wave_add_generic([pigpio.pulse(0, 1<<25, lo_time)])
-    #pi.wave_add_generic(custom_pwm(25, int(colors[color]['blue']), hi_time)+[pigpio.pulse(0, 1<<25, lo_time)])
-    #blue = pi.wave_create()
-
-    #send waveforms
-    #pi.wave_send_repeat(red)
-    #pi.wave_send_repeat(green)
-    #pi.wave_send_repeat(blue)
-
-    #pi.wave_tx_stop()
-    #pi.wave_tx_stop()
-    #pi.wave_tx_stop()
-    #pi.wave_clear()
-
-    #pi.wave_send_repeat(wid)
     return render_template('main.html')
 
 def custom_pwm(pin, duty, length):
