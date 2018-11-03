@@ -1,3 +1,4 @@
+from .app import *
 import time
 
 def clear_lights():

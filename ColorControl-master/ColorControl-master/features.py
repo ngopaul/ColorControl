@@ -1,5 +1,6 @@
 from . import commands
 from . import app
+import time
 
 def flash(color_dict):
     while True:
@@ -8,7 +9,4 @@ def flash(color_dict):
         commands.clear_lights()
         time.sleep(lo_time/1000)
 
-
-
 if __name__ == '__main__':
-    
