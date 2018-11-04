@@ -93,12 +93,14 @@ def off():
 
 @app.route('/flash/<color>/<hi_time>/<lo_time>', methods=['GET', 'POST'])
 def flash(color, hi_time, lo_time):
+    color = color.lower()
     if not color in colors:
         return render_template('main.html')
     flash_fx(color, hi_time, lo_time)
     return render_template('main.html')
 
 def flash_fx(color, hi_time, lo_time):
+    color = color.lower()
     if not color in colors:
         return
     global current_color, current_times, current_feature
@@ -122,12 +124,14 @@ def flash_fx(color, hi_time, lo_time):
 
 @app.route('/breathe/<color>/<length>/<lo_time>', methods=['GET', 'POST'])
 def breathe(color, length, lo_time):
+    color = color.lower()
     if not color in colors:
         return render_template('main.html')
     breathe_fx(color, length, lo_time)
     return render_template('main.html')
 
 def breathe_fx(color, length, lo_time):
+    color = color.lower()
     print("Color: " + color)
     if not color in colors:
         return
@@ -188,7 +192,10 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
     print(current_times)
 
 def parse_multi_colors(colors):
-    return colors.split(',')
+    temp = colors.split(',')
+    for i in range(len(temp)):
+        temp[i] = temp[i].lower()
+    return temp
 
 @app.route('/speedup', methods=['GET', 'POST'])
 def speedup():
