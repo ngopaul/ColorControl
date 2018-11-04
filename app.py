@@ -125,6 +125,7 @@ def breathe(color, length, lo_time):
     return render_template('main.html')
 
 def breathe_fx(color, length, lo_time):
+    print("Color: " + color)
     if not color in colors:
         return
     global current_color, current_times, current_feature
