@@ -142,9 +142,9 @@ def speedup():
     if current_feature == "on":
         return render_template('main.html')
     elif current_feature == "flash":
-        return flash(current_color, str(int((current_times[0])*3/4)//1), str(int((current_times[1])*3/4)//1))
+        return flash(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
     elif current_feature == "breathe":
-        return breathe(current_color, str(int((current_times[0])*3/4)//1), str(int((current_times[1])*3/4)//1))
+        return breathe(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
     return render_template('main.html')
 
 @app.route('/slowdown', methods=['GET', 'POST'])
@@ -152,9 +152,9 @@ def slowdown():
     if current_feature == "on":
         return render_template('main.html')
     elif current_feature == "flash":
-        return flash(current_color, str(int((current_times[0])*4/3)//1), str(int((current_times[1])*4/3)//1))
+        return flash(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
     elif current_feature == "breathe":
-        return breathe(current_color, str(int((current_times[0])*4/3)//1), str(int((current_times[1])*4/3)//1))
+        return breathe(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
     return render_template('main.html')
     
 
