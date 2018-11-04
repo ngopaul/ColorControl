@@ -77,8 +77,6 @@ def main():
             get_lit(color)
         if off:
             clear_lights()
-        if breathe:
-            
     return render_template('main.html')
 
 @app.route('/on/<color>', methods=['GET', 'POST'])
