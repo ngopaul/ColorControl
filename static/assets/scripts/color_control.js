@@ -350,7 +350,7 @@ function multiButtonClicked() {
 }
 document.getElementById("button-multi").onclick = multiButtonClicked;	
 
-function send_data(info, times, array) {
+function send_data(info, times = [], array = []) {
     console.log("Sending Data");
     var xhr = new XMLHttpRequest();
     var data = new FormData();
