@@ -79,7 +79,7 @@ def main():
             clear_lights()
         if breathe:
             
-   return render_template('main.html')
+    return render_template('main.html')
 
 @app.route('/on/<color>', methods=['GET', 'POST'])
 def on(color):
