@@ -79,10 +79,17 @@ def multi_breathe(colors, length, lo_time):
             i = (i + 1) % n
         time.sleep(lo_time/100)
         
-
 if __name__ == '__main__':
     func = sys.argv[1]
     if func == 'flash':
         flash(sys.argv[2], sys.argv[3], sys.argv[4])
     elif func == 'breathe':
         breathe(sys.argv[2], sys.argv[3], sys.argv[4])
+    elif func == 'multi':
+        multi_type = sys.argv[2]
+        if multi_type == 'breathe':
+            multi_breathe(sys.argv[3], sys.argv[4], sys.argv[5])
+        elif multi_type == 'on':
+            multi_on(sys.argv[3], sys.argv[4])
+        elif multi_type == 'flash':
+            multi_flash(sys.argv[3], sys.argv[4], sys.argv[5])

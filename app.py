@@ -149,7 +149,45 @@ def breathe_fx(color, length, lo_time):
     print(current_color)
     print(current_feature)
     print(current_times)
-    
+
+@app.route('/multi/<feature>/<colorlist>/<hi_time>')
+@app.route('/multi/<feature>/<colorlist>/<hi_time>/<lo_time>')
+def multi(feature, colorlist, hi_time, lo_time = ""):
+    colorlist = parse_multi_colors(colorlist)
+    for color in colorlist:
+        if not color in colors:
+            return render_template('main.html')
+    multi_fx(feature, colorlist, hi_time, lo_time)
+    return render_template('main.html')
+
+def multi_fx(feature, colorlist, hi_time, lo_time = ""):
+    for color in colorlist:
+        if not color in colors:
+            return
+    global current_color, current_times, current_feature
+    current_color = colorlist
+    try:
+        current_times = [str(float(hi_time)), str(float(lo_time))]
+    except:
+        current_times = [str(float(hi_time)), "0"]
+    current_feature = "multi " + feature
+    clear_lights()
+
+    os.system("python3 features.py "+ "multi " + feature + " " + color + " " + hi_time + " " + lo_time + " &")
+
+    y = subprocess.check_output(['pidof', 'python3'])
+    print(y)
+
+    global need_to_kill, PID
+    need_to_kill = True
+    PID = str(y).split(' ')[0][2:]
+    print(PID)
+    print(current_color)
+    print(current_feature)
+    print(current_times)
+
+def parse_multi_colors(colors):
+    return colors.split(',')
 
 @app.route('/speedup', methods=['GET', 'POST'])
 def speedup():
@@ -165,6 +203,16 @@ def speedup():
             breathe_fx(current_color, str((float(current_times[0])-30)), str((float(current_times[1])-30)))
         else:
             print("Cannot speed up anymore.")
+    elif "multi" in current_feature:
+        if "on" in current_feature:
+            if float(current_times[0])-30 > 0:
+                multi_fx("on", current_color, str((float(current_times[0])-30)))
+        elif "flash" in current_feature:
+            if float(current_times[0])-30 > 0 and float(current_times[1])-30 > 0:
+                multi_fx("flash", current_color, str((float(current_times[0])-30)), str((float(current_times[1])-30)))
+        else:
+            if float(current_times[0])-30 > 0 and float(current_times[1])-30 > 0:
+                multi_fx("breathe", current_color, str((float(current_times[0])-30)), str((float(current_times[1])-30)))
     return render_template('main.html')
 
 @app.route('/slowdown', methods=['GET', 'POST'])
@@ -175,6 +223,13 @@ def slowdown():
     elif current_feature == "breathe":
         print("Slowing down breathe.")
         breathe_fx(current_color, str(float(current_times[0])+30), str(float(current_times[1])+30))
+    elif "multi" in current_feature:
+        if "on" in current_feature:
+            multi_fx("on", current_color, str(float(current_times[0])+30))
+        elif "flash" in current_feature:
+            multi_fx("flash", current_color, str(float(current_times[0])+30), str(float(current_times[1])+30))
+        else:
+            multi_fx("breathe", current_color, str(float(current_times[0])+30), str(float(current_times[1])+30))
     return render_template('main.html')
     
 
