@@ -182,6 +182,16 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
     current_feature = "multi " + feature
     clear_lights()
 
+    if feature == '1':
+        feature = 'on'
+    elif feature == '2':
+        feature = 'flash'
+    elif feature = '3':
+        feature = 'breathe'
+
+    if feature == 'on':
+        lo_time = ""
+
     os.system("python3 features.py "+ "multi " + feature + " " + colorlist + " " + hi_time + " " + lo_time + " &")
 
     y = subprocess.check_output(['pidof', 'python3'])
@@ -196,10 +206,16 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
     print(current_times)
 
 def parse_multi_colors(colors):
-    temp = colors.split(',')
-    for i in range(len(temp)):
-        temp[i] = temp[i].lower()
-    return temp
+    if "," in colors:
+        temp = colors.split(',')
+        for i in range(len(temp)):
+            temp[i] = temp[i].lower()
+        return temp
+    else:
+        temp = colors.split(' ')
+        for i in range(len(temp)):
+            temp[i] = temp[i].lower()
+        return temp
 
 @app.route('/speedup', methods=['GET', 'POST'])
 def speedup():
