@@ -83,7 +83,7 @@ def main():
                 flash_fx(current_color, times[0], times[1])
         elif info == 'breathe':
             # toggle
-            if current_feature = 'breathe':
+            if current_feature == 'breathe':
                 get_lit_safe(current_color)
             else:
                 breathe_fx(current_color, times[0], times[1])
