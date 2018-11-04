@@ -52,7 +52,7 @@ def multi_on(colors, length):
     while True:
         get_lit(colors[i])
         i = (i + 1) % n
-        time.sleep(length/1000)
+        time.sleep(float(length)/1000)
 
 def multi_flash(colors, hi_time, lo_time):
     hi_time = float(hi_time)
