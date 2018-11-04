@@ -192,6 +192,8 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
     if feature == 'on':
         lo_time = ""
 
+    colorlist = colorlist.replace(' ', ',')
+
     os.system("python3 features.py "+ "multi " + feature + " " + colorlist + " " + hi_time + " " + lo_time + " &")
 
     y = subprocess.check_output(['pidof', 'python3'])
@@ -216,6 +218,10 @@ def parse_multi_colors(colors):
         for i in range(len(temp)):
             temp[i] = temp[i].lower()
         return temp
+
+def multi_space_to_comma(colors):
+    return colors.replace(' ', ',')
+    
 
 @app.route('/speedup', methods=['GET', 'POST'])
 def speedup():
