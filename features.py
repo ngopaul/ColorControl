@@ -79,7 +79,7 @@ def multi_breathe(colors, length, lo_time):
             get_lit_more(colors[i], math.sin(math.pi*counter/100))
             time.sleep(length/100000)
         print(colors[i])
-        print(i)
+        print(i, n)
         i = (i + 1) % n
         time.sleep(lo_time/1000)
         
