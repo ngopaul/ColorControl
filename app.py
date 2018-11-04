@@ -155,12 +155,10 @@ def speedup():
 
 @app.route('/slowdown', methods=['GET', 'POST'])
 def slowdown():
-    if current_feature == "on":
-        return render_template('main.html')
-    elif current_feature == "flash":
-        return flash_fx(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
+    if current_feature == "flash":
+        flash_fx(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
     elif current_feature == "breathe":
-        return breathe_fx(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
+        breathe_fx(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
     return render_template('main.html')
     
 
