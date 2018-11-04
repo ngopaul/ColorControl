@@ -70,6 +70,7 @@ def multi_breathe(colors, length, lo_time):
     length = float(length)
     lo_time = float(lo_time)
     n = len(colors)
+    print(colors)
     while True:
         counter = 0
         i = 0
