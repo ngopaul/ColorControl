@@ -26,8 +26,8 @@ def get_lit_more(color, percent):
     pi.set_PWM_dutycycle(25, color_dict['blue']*percent)
 
 def flash(color, hi_time, lo_time):
-    hi_time = int(float(hi_time))
-    lo_time = int(float(lo_time))
+    hi_time = float(hi_time)
+    lo_time = float(lo_time)
     while True:
         get_lit(color)
         time.sleep(hi_time/1000)
@@ -35,8 +35,8 @@ def flash(color, hi_time, lo_time):
         time.sleep(lo_time/1000)
 
 def breathe(color, length, lo_time):
-    length = int(float(length))
-    lo_time = int(float(lo_time))
+    length = float(length)
+    lo_time = float(lo_time)
     while True:
         counter = 0
         while counter < 100:

@@ -103,7 +103,7 @@ def flash_fx(color, hi_time, lo_time):
         return
     global current_color, current_times, current_feature
     current_color = color
-    current_times = [str(int(float(hi_time))), str(int(float(lo_time)))]
+    current_times = [str(float(hi_time)), str(float(lo_time))]
     current_feature = "flash"
     clear_lights()
 
@@ -133,7 +133,7 @@ def breathe_fx(color, length, lo_time):
         return
     global current_color, current_times, current_feature
     current_color = color
-    current_times = [str(int(float(length))), str(int(float(lo_time)))]
+    current_times = [str(float(length)), str(float(lo_time))]
     current_feature = "breathe"
     clear_lights()
 
@@ -155,20 +155,20 @@ def breathe_fx(color, length, lo_time):
 def speedup():
     if current_feature == "flash":
         print("Speeding up flash.")
-        flash_fx(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
+        flash_fx(current_color, str((float(current_times[0])*3/4)//1), str((float(current_times[1])*3/4)//1))
     elif current_feature == "breathe":
         print("Speeding up breathe.")
-        breathe_fx(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
+        breathe_fx(current_color, str((float(current_times[0])*3/4)//1), str((float(current_times[1])*3/4)//1))
     return render_template('main.html')
 
 @app.route('/slowdown', methods=['GET', 'POST'])
 def slowdown():
     if current_feature == "flash":
         print("Slowing down flash.")
-        flash_fx(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
+        flash_fx(current_color, str((float(current_times[0])*4/3)//1), str((float(current_times[1])*4/3)//1))
     elif current_feature == "breathe":
         print("Slowing down breathe.")
-        breathe_fx(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
+        breathe_fx(current_color, str((float(current_times[0])*4/3)//1), str((float(current_times[1])*4/3)//1))
     return render_template('main.html')
     
 
