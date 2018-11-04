@@ -67,6 +67,7 @@ def return_colors():
 
 @app.route("/", methods=['GET', 'POST'])
 def main():
+    global current_color
     if request.method == "POST":
         info = request.values.get('info')
         times = request.values.get('times')
@@ -94,10 +95,9 @@ def main():
         elif info == 'multi on':
             multi_fx("on", repr(array).replace('[', '').replace(']', '').replace(' ', ''), times[0], times[1])
         elif info in colors:
-            if last_command == 'off':
+            if last_command == 'off' or last_command == '':
                 get_lit_safe(current_color)
             else:
-                global current_color
                 current_color = info
                 execute_prev()
     return render_template('main.html')
