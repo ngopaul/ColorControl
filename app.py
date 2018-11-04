@@ -179,13 +179,11 @@ def get_lit(color):
     pi.set_PWM_dutycycle(25, color_dict['blue'])
     
 def clear_lights():
-    global need_to_kill, current_color
+    global need_to_kill
     
     if need_to_kill:
         os.system("kill " + PID)
         need_to_kill = False
-        
-    current_color = ""
     
     pi.wave_clear()
     pi.set_mode(23, pigpio.OUTPUT)
