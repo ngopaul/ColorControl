@@ -145,12 +145,10 @@ def breathe_fx(color, length, lo_time):
 
 @app.route('/speedup', methods=['GET', 'POST'])
 def speedup():
-    if current_feature == "on":
-        return render_template('main.html')
-    elif current_feature == "flash":
-        return flash_fx(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
+    if current_feature == "flash":
+        flash_fx(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
     elif current_feature == "breathe":
-        return breathe_fx(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
+        breathe_fx(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
     return render_template('main.html')
 
 @app.route('/slowdown', methods=['GET', 'POST'])
