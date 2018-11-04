@@ -60,6 +60,9 @@ colors = {
     'lightblue': {'red': 0.0, 'green': 0.0, 'blue': 255.0},
 }
 
+def return_colors():
+    return colors
+
 @app.route("/", methods=['GET', 'POST'])
 def main():
    if request.method == "POST":
@@ -96,7 +99,29 @@ def flash(color, hi_time, lo_time):
     current_times = [hi_time, lo_time]
     clear_lights()
 
-    os.system("python3 features.py "+ color + " " + hi_time + " " + lo_time + " &")
+    os.system("python3 features.py "+ "flash " + color + " " + hi_time + " " + lo_time + " &")
+
+    y = subprocess.check_output(['pidof', 'python3'])
+    print(y)
+
+    global need_to_kill, PID
+    need_to_kill = True
+    print(PID)
+    PID = str(y).split(' ')[0][2:]
+
+    return render_template('main.html')
+
+@app.route('/breathe/<color>/<length>/<lo_time>', methods=['GET', 'POST'])
+def breathe(color, length, lo_time):
+    if not color in colors:
+        return render_template('main.html')
+    
+    global current_color, current_times
+    current_color = color
+    current_times = [length, lo_time]
+    clear_lights()
+
+    os.system("python3 features.py "+ "breathe " + color + " " + length + " " + lo_time + " &")
 
     y = subprocess.check_output(['pidof', 'python3'])
     print(y)

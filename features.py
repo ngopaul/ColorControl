@@ -1,15 +1,53 @@
-import app
+from app import clear_lights, return_colors
 import time
 import sys
+import math
+import pigpio
+
+pi = pigpio.pi()
+
+def convert(color):
+    color['green'] *= 200/255
+    color['blue'] *= 150/255
+    return color
+
+colors = return_colors()
+
+def get_lit(color):
+    color_dict = colors[color]
+    pi.set_PWM_dutycycle(23, color_dict['red'])
+    pi.set_PWM_dutycycle(24, color_dict['green'])
+    pi.set_PWM_dutycycle(25, color_dict['blue'])
+
+def get_lit_more(color, percent):
+    color_dict = colors[color]
+    pi.set_PWM_dutycycle(23, color_dict['red']*percent)
+    pi.set_PWM_dutycycle(24, color_dict['green']*percent)
+    pi.set_PWM_dutycycle(25, color_dict['blue']*percent)
 
 def flash(color, hi_time, lo_time):
     hi_time = int(hi_time)
     lo_time = int(lo_time)
     while True:
-        app.get_lit(color)
+        get_lit(color)
         time.sleep(hi_time/1000)
-        app.clear_lights()
+        clear_lights()
         time.sleep(lo_time/1000)
 
+def breathe(color, length, lo_time):
+    length = int(length)
+    lo_time = int(lo_time)
+    while True:
+        counter = 0
+        while counter < 100:
+            counter += 1
+            get_lit_more(color, math.sin(math.pi*counter/100))
+            time.sleep(length/100)
+        time.sleep(lo_time/100)
+
 if __name__ == '__main__':
-    flash(sys.argv[1], sys.argv[2], sys.argv[3])
+    func = sys.argv[1]
+    if func == 'flash':
+        flash(sys.argv[2], sys.argv[3], sys.argv[4])
+    elif func == 'breathe':
+        breathe(sys.argv[2], sys.argv[3], sys.argv[4])
