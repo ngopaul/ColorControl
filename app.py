@@ -153,15 +153,16 @@ def breathe_fx(color, length, lo_time):
 @app.route('/multi/<feature>/<colorlist>/<hi_time>')
 @app.route('/multi/<feature>/<colorlist>/<hi_time>/<lo_time>')
 def multi(feature, colorlist, hi_time, lo_time = ""):
-    colorlist = parse_multi_colors(colorlist)
-    for color in colorlist:
+    colorlist2 = parse_multi_colors(colorlist)
+    for color in colorlist2:
         if not color in colors:
             return render_template('main.html')
     multi_fx(feature, colorlist, hi_time, lo_time)
     return render_template('main.html')
 
 def multi_fx(feature, colorlist, hi_time, lo_time = ""):
-    for color in colorlist:
+    colorlist2 = parse_multi_colors(colorlist)
+    for color in colorlist2:
         if not color in colors:
             return
     global current_color, current_times, current_feature
@@ -173,7 +174,7 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
     current_feature = "multi " + feature
     clear_lights()
 
-    os.system("python3 features.py "+ "multi " + feature + " " + color + " " + hi_time + " " + lo_time + " &")
+    os.system("python3 features.py "+ "multi " + feature + " " + colorlist + " " + hi_time + " " + lo_time + " &")
 
     y = subprocess.check_output(['pidof', 'python3'])
     print(y)

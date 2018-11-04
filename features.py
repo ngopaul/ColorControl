@@ -1,4 +1,4 @@
-from app import clear_lights, return_colors, get_lit
+from app import clear_lights, return_colors, parse_multi_colors
 import time
 import sys
 import math
@@ -88,8 +88,8 @@ if __name__ == '__main__':
     elif func == 'multi':
         multi_type = sys.argv[2]
         if multi_type == 'breathe':
-            multi_breathe(sys.argv[3], sys.argv[4], sys.argv[5])
+            multi_breathe(parse_multi_colors(sys.argv[3]), sys.argv[4], sys.argv[5])
         elif multi_type == 'on':
-            multi_on(sys.argv[3], sys.argv[4])
+            multi_on(parse_multi_colors(sys.argv[3]), sys.argv[4])
         elif multi_type == 'flash':
-            multi_flash(sys.argv[3], sys.argv[4], sys.argv[5])
+            multi_flash(parse_multi_colors(sys.argv[3]), sys.argv[4], sys.argv[5])
