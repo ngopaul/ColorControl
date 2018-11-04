@@ -66,7 +66,7 @@ def return_colors():
 
 @app.route("/", methods=['GET', 'POST'])
 def main():
-   if request.method == "POST":
+    if request.method == "POST":
         color = request.values.get('color')
         breathe = request.values.get('breathe')
         flash = request.values.get('flash')
