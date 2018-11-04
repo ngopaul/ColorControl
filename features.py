@@ -42,7 +42,7 @@ def breathe(color, length, lo_time):
         while counter < 100:
             counter += 1
             get_lit_more(color, math.sin(math.pi*counter/100))
-            time.sleep(length/100)
+            time.sleep(length/10000)
         time.sleep(lo_time/100)
 
 if __name__ == '__main__':

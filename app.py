@@ -155,20 +155,26 @@ def breathe_fx(color, length, lo_time):
 def speedup():
     if current_feature == "flash":
         print("Speeding up flash.")
-        flash_fx(current_color, str((float(current_times[0])*3/4)//1), str((float(current_times[1])*3/4)//1))
+        if float(current_times[0])-30 > 0 and float(current_times[1])-30 > 0:
+            flash_fx(current_color, str((float(current_times[0])-30)), str((float(current_times[1])-30)))
+        else:
+            print("Cannot speed up anymore.")
     elif current_feature == "breathe":
         print("Speeding up breathe.")
-        breathe_fx(current_color, str((float(current_times[0])*3/4)//1), str((float(current_times[1])*3/4)//1))
+        if float(current_times[0])-30 > 0 and float(current_times[1])-30 > 0:
+            breathe_fx(current_color, str((float(current_times[0])-30)), str((float(current_times[1])-30)))
+        else:
+            print("Cannot speed up anymore.")
     return render_template('main.html')
 
 @app.route('/slowdown', methods=['GET', 'POST'])
 def slowdown():
     if current_feature == "flash":
         print("Slowing down flash.")
-        flash_fx(current_color, str((float(current_times[0])*4/3)//1), str((float(current_times[1])*4/3)//1))
+        flash_fx(current_color, str(float(current_times[0])+30), str(float(current_times[1])+30))
     elif current_feature == "breathe":
         print("Slowing down breathe.")
-        breathe_fx(current_color, str((float(current_times[0])*4/3)//1), str((float(current_times[1])*4/3)//1))
+        breathe_fx(current_color, str(float(current_times[0])+30), str(float(current_times[1])+30))
     return render_template('main.html')
     
 
