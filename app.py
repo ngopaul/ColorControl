@@ -182,11 +182,11 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
     current_feature = "multi " + feature
     clear_lights()
 
-    if feature == '1':
+    if feature == '23':
         feature = 'on'
-    elif feature == '2':
+    elif feature == '24':
         feature = 'flash'
-    elif feature == '3':
+    elif feature == '25':
         feature = 'breathe'
 
     if feature == 'on':
