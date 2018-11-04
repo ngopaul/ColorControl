@@ -17,6 +17,7 @@ GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 frequency = 70
 need_to_kill = False
 PID = ""
+last_command = ""
 current_color = ""
 current_feature = ""
 current_times = [0, 0]
@@ -67,31 +68,55 @@ def return_colors():
 @app.route("/", methods=['GET', 'POST'])
 def main():
     if request.method == "POST":
-        color = request.values.get('color')
-        breathe = request.values.get('breathe')
-        flash = request.values.get('flash')
-        multicolor = request.values.get('multicolor')
-        color_array = request.values.get('color_array')
-        off = request.values.get('off')
-        if color:
-            get_lit(color)
-        if off:
+        info = request.values.get('info')
+        times = request.values.get('times')
+        array = request.values.get('array')
+        if info == 'off':
             clear_lights()
+        elif info == 'on':
+            execute_prev()
+        elif info == 'flash':
+            # toggle
+            if current_feature == 'flash':
+                get_lit_safe(current_color)
+            else:
+                flash_fx(current_color, times[0], times[1])
+        elif info == 'breathe':
+            # toggle
+            if current_feature = 'breathe':
+                get_lit_safe(current_color)
+            else:
+                breathe_fx(current_color, times[0], times[1])
+        elif info == 'multi breathe':
+            multi_fx("breathe", repr(array).replace('[', '').replace(']', '').replace(' ', ''), times[0], times[1])
+        elif info == 'multi flash':
+            multi_fx("flash", repr(array).replace('[', '').replace(']', '').replace(' ', ''), times[0], times[1])
+        elif info == 'multi on':
+            multi_fx("on", repr(array).replace('[', '').replace(']', '').replace(' ', ''), times[0], times[1])
+        elif info in colors:
+            if last_command == 'off':
+                get_lit_safe(current_color)
+            else:
+                global current_color
+                current_color = info
+                execute_prev()
     return render_template('main.html')
 
 @app.route('/on/<color>', methods=['GET', 'POST'])
 def on(color):
-    clear_lights()
     color = color.lower()
     if color in colors:
-        get_lit(color)
-        global current_color, current_feature
+        get_lit_safe(color)
+        global current_color, current_feature, last_command
         current_color = color
         current_feature = "on"
+        last_command = "on"
     return render_template('main.html')
 
 @app.route('/off/', methods=['GET', 'POST'])
 def off():
+    global last_command
+    last_command = "off"
     clear_lights()
     return render_template('main.html')
 
@@ -107,7 +132,8 @@ def flash_fx(color, hi_time, lo_time):
     color = color.lower()
     if not color in colors:
         return
-    global current_color, current_times, current_feature
+    global current_color, current_times, current_feature, last_command
+    last_command = "flash"
     current_color = color
     current_times = [str(float(hi_time)), str(float(lo_time))]
     current_feature = "flash"
@@ -139,7 +165,8 @@ def breathe_fx(color, length, lo_time):
     print("Color: " + color)
     if not color in colors:
         return
-    global current_color, current_times, current_feature
+    global current_color, current_times, current_feature, last_command
+    last_command = "breathe"
     current_color = color
     current_times = [str(float(length)), str(float(lo_time))]
     current_feature = "breathe"
@@ -173,7 +200,7 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
     for color in colorlist2:
         if not color in colors:
             return
-    global current_color, current_times, current_feature
+    global current_color, current_times, current_feature, last_command
     current_color = colorlist
     try:
         current_times = [str(float(hi_time)), str(float(lo_time))]
@@ -195,6 +222,7 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
 
     colorlist = colorlist.replace(' ', ',')
 
+    last_command = "multi " + feature
     os.system("python3 features.py "+ "multi " + feature + " " + colorlist + " " + hi_time + " " + lo_time + " &")
 
     y = subprocess.check_output(['pidof', 'python3'])
@@ -223,6 +251,19 @@ def parse_multi_colors(colors):
 def multi_space_to_comma(colors):
     return colors.replace(' ', ',')
     
+def execute_prev():
+    if current_feature == 'on':
+        get_lit_safe(current_color)
+    elif current_color == 'flash':
+        flash_fx(current_color, current_times[0], current_times[1])
+    elif current_color == 'breathe':
+        breathe_fx(current_color, current_times[0], current_times[1])
+    elif current_color == 'multi on':
+        multi_fx('on', current_color, current_times[0], current_times[1])
+    elif current_color == 'multi flash':
+        multi_fx('flash', current_color, current_times[0], current_times[1])
+    elif current_color == 'multi breathe':
+        multi_fx('breathe', current_color, current_times[0], current_times[1])
 
 @app.route('/speedup', methods=['GET', 'POST'])
 def speedup():
@@ -266,9 +307,36 @@ def slowdown():
         else:
             multi_fx("breathe", current_color, str(float(current_times[0])+30), str(float(current_times[1])+30))
     return render_template('main.html')
-    
+
+@app.route('/sound', methods=['GET', 'POST'])
+def sound():
+    sound_fx()
+    return render_template('main.html')
+
+def sound_fx():
+    global current_feature
+    current_feature = "sound"
+    clear_lights()
+
+    os.system("python3 features.py "+ "sound " + "&")
+
+    y = subprocess.check_output(['pidof', 'python3'])
+    print(y)
+
+    global need_to_kill, PID
+    need_to_kill = True
+    PID = str(y).split(' ')[0][2:]
+    print(PID)
+    print(current_feature)
 
 def get_lit(color):
+    color_dict = colors[color]
+    pi.set_PWM_dutycycle(23, color_dict['red'])
+    pi.set_PWM_dutycycle(24, color_dict['green'])
+    pi.set_PWM_dutycycle(25, color_dict['blue'])
+
+def get_lit_safe(color):
+    clear_lights()
     color_dict = colors[color]
     pi.set_PWM_dutycycle(23, color_dict['red'])
     pi.set_PWM_dutycycle(24, color_dict['green'])

@@ -308,12 +308,23 @@ function offButtonClicked() {
 document.getElementById("button-off").onclick = offButtonClicked;	
 
 //  FLASH
+function onButtonClicked() {
+    console.log("on");
+    if (multi_clicked == true) {
+        send_data("multi on", [200, 200], light_colors);
+    } else {
+        send_data("on", [200, 200]);
+    }
+}
+document.getElementById("button-on").onclick = onButtonClicked;	
+
+//  FLASH
 function flashButtonClicked() {
     console.log("flash");
     if (multi_clicked == true) {
-        send_data("flash", light_colors);
+        send_data("multi flash", [200, 200], light_colors);
     } else {
-        send_data("flash");
+        send_data("flash", [200, 200]);
     }
 }
 document.getElementById("button-flash").onclick = flashButtonClicked;	
@@ -322,26 +333,29 @@ document.getElementById("button-flash").onclick = flashButtonClicked;
 function breatheButtonClicked() {
     console.log("breathe");
     if (multi_clicked == true) {
-        send_data("breathe", light_colors);
+        send_data("multi breathe", [200, 200], light_colors);
     } else {
-        send_data("breathe");
+        send_data("breathe", [200, 200]);
     }
+    console.log("Reloading webpage...")
+    location.reload()
 }
 document.getElementById("button-breathe").onclick = breatheButtonClicked;	
 
 // MULTI
 function multiButtonClicked() {
-    console.log("multi");
-    send_data("multi");
+    console.log("multi was clicked");
+    //send_data("multi");
     multi_clicked = true;
 }
 document.getElementById("button-multi").onclick = multiButtonClicked;	
 
-function send_data(color, array) {
+function send_data(info, times, array) {
     console.log("Sending Data");
     var xhr = new XMLHttpRequest();
     var data = new FormData();
-    data.append('color', color);
+    data.append('info', info);
+    data.append('times', times);
     data.append('array', array);
     xhr.open("POST", "/", true);
     xhr.send(data);
