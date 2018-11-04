@@ -95,7 +95,12 @@ def off():
 def flash(color, hi_time, lo_time):
     if not color in colors:
         return render_template('main.html')
-    
+    flash_fx(color, hi_time, lo_time)
+    return render_template('main.html')
+
+def flash_fx(color, hi_time, lo_time):
+    if not color in colors:
+        return
     global current_color, current_times, current_feature
     current_color = color
     current_times = [hi_time, lo_time]
@@ -112,13 +117,16 @@ def flash(color, hi_time, lo_time):
     print(PID)
     PID = str(y).split(' ')[0][2:]
 
-    return render_template('main.html')
-
 @app.route('/breathe/<color>/<length>/<lo_time>', methods=['GET', 'POST'])
 def breathe(color, length, lo_time):
     if not color in colors:
         return render_template('main.html')
-    
+    breathe_fx(color, length, lo_time)
+    return render_template('main.html')
+
+def breathe_fx(color, length, lo_time):
+    if not color in colors:
+        return
     global current_color, current_times, current_feature
     current_color = color
     current_times = [length, lo_time]
@@ -135,16 +143,14 @@ def breathe(color, length, lo_time):
     print(PID)
     PID = str(y).split(' ')[0][2:]
 
-    return render_template('main.html')
-
 @app.route('/speedup', methods=['GET', 'POST'])
 def speedup():
     if current_feature == "on":
         return render_template('main.html')
     elif current_feature == "flash":
-        return flash(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
+        return flash_fx(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
     elif current_feature == "breathe":
-        return breathe(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
+        return breathe_fx(current_color, str((int(current_times[0])*3/4)//1), str((int(current_times[1])*3/4)//1))
     return render_template('main.html')
 
 @app.route('/slowdown', methods=['GET', 'POST'])
@@ -152,9 +158,9 @@ def slowdown():
     if current_feature == "on":
         return render_template('main.html')
     elif current_feature == "flash":
-        return flash(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
+        return flash_fx(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
     elif current_feature == "breathe":
-        return breathe(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
+        return breathe_fx(current_color, str((int(current_times[0])*4/3)//1), str((int(current_times[1])*4/3)//1))
     return render_template('main.html')
     
 
