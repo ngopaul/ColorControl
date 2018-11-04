@@ -186,7 +186,7 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
         feature = 'on'
     elif feature == '2':
         feature = 'flash'
-    elif feature = '3':
+    elif feature == '3':
         feature = 'breathe'
 
     if feature == 'on':
