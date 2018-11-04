@@ -18,6 +18,7 @@ frequency = 70
 need_to_kill = False
 PID = ""
 current_color = ""
+current_feature = ""
 current_times = [0, 0]
 
 def convert(color):
@@ -80,8 +81,9 @@ def on(color):
     color = color.lower()
     if color in colors:
         get_lit(color)
-        global current_color
+        global current_color, current_feature
         current_color = color
+        current_feature = "on"
     return render_template('main.html')
 
 @app.route('/off/', methods=['GET', 'POST'])
@@ -94,9 +96,10 @@ def flash(color, hi_time, lo_time):
     if not color in colors:
         return render_template('main.html')
     
-    global current_color, current_times
+    global current_color, current_times, current_feature
     current_color = color
     current_times = [hi_time, lo_time]
+    current_feature = "flash"
     clear_lights()
 
     os.system("python3 features.py "+ "flash " + color + " " + hi_time + " " + lo_time + " &")
@@ -116,9 +119,10 @@ def breathe(color, length, lo_time):
     if not color in colors:
         return render_template('main.html')
     
-    global current_color, current_times
+    global current_color, current_times, current_feature
     current_color = color
     current_times = [length, lo_time]
+    current_feature = "breathe"
     clear_lights()
 
     os.system("python3 features.py "+ "breathe " + color + " " + length + " " + lo_time + " &")
@@ -132,6 +136,27 @@ def breathe(color, length, lo_time):
     PID = str(y).split(' ')[0][2:]
 
     return render_template('main.html')
+
+@app.route('/speedup', methods=['GET', 'POST'])
+def speedup():
+    if current_feature == "on":
+        return render_template('main.html')
+    elif current_feature == "flash":
+        return flash(current_color, str(int((current_times[0])*3/4)//1), str(int((current_times[1])*3/4)//1))
+    elif current_feature == "breathe":
+        return breathe(current_color, str(int((current_times[0])*3/4)//1), str(int((current_times[1])*3/4)//1))
+    return render_template('main.html')
+
+@app.route('/slowdown', methods=['GET', 'POST'])
+def slowdown():
+    if current_feature == "on":
+        return render_template('main.html')
+    elif current_feature == "flash":
+        return flash(current_color, str(int((current_times[0])*4/3)//1), str(int((current_times[1])*4/3)//1))
+    elif current_feature == "breathe":
+        return breathe(current_color, str(int((current_times[0])*4/3)//1), str(int((current_times[1])*4/3)//1))
+    return render_template('main.html')
+    
 
 def get_lit(color):
     color_dict = colors[color]
