@@ -103,7 +103,7 @@ def flash_fx(color, hi_time, lo_time):
         return
     global current_color, current_times, current_feature
     current_color = color
-    current_times = [hi_time, lo_time]
+    current_times = [str(int(float(hi_time))), str(int(float(lo_time)))]
     current_feature = "flash"
     clear_lights()
 
@@ -133,7 +133,7 @@ def breathe_fx(color, length, lo_time):
         return
     global current_color, current_times, current_feature
     current_color = color
-    current_times = [length, lo_time]
+    current_times = [str(int(float(length))), str(int(float(lo_time)))]
     current_feature = "breathe"
     clear_lights()
 
