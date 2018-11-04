@@ -114,11 +114,11 @@ def flash_fx(color, hi_time, lo_time):
 
     global need_to_kill, PID
     need_to_kill = True
+    PID = str(y).split(' ')[0][2:]
     print(PID)
     print(current_color)
     print(current_feature)
     print(current_times)
-    PID = str(y).split(' ')[0][2:]
 
 @app.route('/breathe/<color>/<length>/<lo_time>', methods=['GET', 'POST'])
 def breathe(color, length, lo_time):
