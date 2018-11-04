@@ -67,12 +67,18 @@ def return_colors():
 @app.route("/", methods=['GET', 'POST'])
 def main():
    if request.method == "POST":
-       color = request.values.get('color')
-       off = request.values.get('off')
-       if color:
-           get_lit(color)
-       if off:
-           clear_lights()
+        color = request.values.get('color')
+        breathe = request.values.get('breathe')
+        flash = request.values.get('flash')
+        multicolor = request.values.get('multicolor')
+        color_array = request.values.get('color_array')
+        off = request.values.get('off')
+        if color:
+            get_lit(color)
+        if off:
+            clear_lights()
+        if breathe:
+            
    return render_template('main.html')
 
 @app.route('/on/<color>', methods=['GET', 'POST'])

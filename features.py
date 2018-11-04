@@ -42,8 +42,8 @@ def breathe(color, length, lo_time):
         while counter < 100:
             counter += 1
             get_lit_more(color, math.sin(math.pi*counter/100))
-            time.sleep(length/10000)
-        time.sleep(lo_time/100)
+            time.sleep(length/100000)
+        time.sleep(lo_time/1000)
 
 # Colors is a LIST of color
 def multi_on(colors, length):
@@ -52,6 +52,7 @@ def multi_on(colors, length):
     while True:
         get_lit(colors[i])
         i = (i + 1) % n
+        time.sleep(length/1000)
 
 def multi_flash(colors, hi_time, lo_time):
     hi_time = float(hi_time)
@@ -75,9 +76,9 @@ def multi_breathe(colors, length, lo_time):
         while counter < 100:
             counter += 1
             get_lit_more(colors[i], math.sin(math.pi*counter/100))
-            time.sleep(length/10000)
-            i = (i + 1) % n
-        time.sleep(lo_time/100)
+            time.sleep(length/100000)
+        i = (i + 1) % n
+        time.sleep(lo_time/1000)
         
 if __name__ == '__main__':
     func = sys.argv[1]
