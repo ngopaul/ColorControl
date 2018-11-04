@@ -11,6 +11,7 @@ body {
     transition: background-color ease 0.5s;
     background-color: #ccc;
 }
+
 #spine-1 {
     display: flex;
     position: absolute;
@@ -26,11 +27,10 @@ body {
     transform: translate(-50%, 0%);
 }
 
-
 .button {
-    width: 50px;
-    height: 50px;
-    margin: 20px;
+    width: 80px;
+    height: 80px;
+    margin: 40px;
     box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
     border-radius: 20%;
     border: 5px solid rgba(255, 255, 255, 0.2);
@@ -41,6 +41,82 @@ body {
     cursor: pointer;
 }
 
+/**
+ * button functions
+ */
+ #button-off {
+    background: white;
+    display: flex;
+    justify-content: center;
+ }
+ #button-flash {
+    background: white;
+    display: flex;
+    justify-content: center;
+ }
+ #button-breathe {
+    background: white;
+    display: flex;
+    justify-content: center;
+ }
+ #button-multi {
+    background: white;
+    display: flex;
+    justify-content: center;
+ }
+
+ #color-functions {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -200%)
+}
+ .function-button {
+    width: 124px;
+    height: 60px;
+    margin: 40px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    transition: transform ease 0.2s;
+}
+.function-button:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+#lo-time {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-125%, 300%)
+}
+#lo-time-name {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-200%, 1000%)
+}
+
+#hi-time {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(25%, 300%)
+}
+#hi-time-name {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(95%, 1000%)
+}
 /**
  * colors
  */
@@ -75,3 +151,4 @@ body {
 #button-white {
     background: white;
 }
+
