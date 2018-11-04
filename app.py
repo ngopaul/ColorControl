@@ -72,6 +72,7 @@ def main():
         info = request.values.get('info')
         times = request.values.get('times')
         array = request.values.get('array')
+        print("recieved POST.", "info=", info, "times=", times, "array=", array)
         if info == 'off':
             clear_lights()
         elif info == 'on':
