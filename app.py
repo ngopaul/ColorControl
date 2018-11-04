@@ -144,11 +144,12 @@ def breathe_fx(color, length, lo_time):
 
     global need_to_kill, PID
     need_to_kill = True
+    PID = str(y).split(' ')[0][2:]
     print(PID)
     print(current_color)
     print(current_feature)
     print(current_times)
-    PID = str(y).split(' ')[0][2:]
+    
 
 @app.route('/speedup', methods=['GET', 'POST'])
 def speedup():
