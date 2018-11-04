@@ -1,4 +1,4 @@
-<html>
+<!-- <html>
 	<head>
 		<title>Color Control</title>
 		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/styles/style.css') }}" />
@@ -20,8 +20,73 @@
 				<div id="button-pink" class="button"></div>
 			</div>
 		</div>
-		<!-- would usually put the <script> in <head> -->
+		< would usually put the <script> in <head> >
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
 		<script type="text/javascript" src="{{ url_for('static', filename='assets/scripts/color_control.js' )}}"></script>
+	</body>
+</html> -->
+
+<html>
+	<head>
+		<title>Color Control</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<link rel="stylesheet" type="text/css" href="../static/assets/styles/style.css" />
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			<div id=color-functions>
+				<div id="button-off" class="function-button">
+					<svg id="button-off" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M18 14.49V9c0-1-1.01-2.01-2-2V3h-2v4h-4V3H8v2.48l9.51 9.5.49-.49zm-1.76 1.77L7.2 7.2l-.01.01L3.98 4 2.71 5.25l3.36 3.36C6.04 8.74 6 8.87 6 9v5.48L9.5 18v3h5v-3l.48-.48L19.45 22l1.26-1.28-4.47-4.46z"/></svg>
+				</div>
+				<div id="button-flash" class="function-button">	
+					<svg id="button-flash" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>		
+				</div>
+				<div id="button-breathe" class="function-button">
+					<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><path d="M17 16.99c-1.35 0-2.2.42-2.95.8-.65.33-1.18.6-2.05.6-.9 0-1.4-.25-2.05-.6-.75-.38-1.57-.8-2.95-.8s-2.2.42-2.95.8c-.65.33-1.17.6-2.05.6v1.95c1.35 0 2.2-.42 2.95-.8.65-.33 1.17-.6 2.05-.6s1.4.25 2.05.6c.75.38 1.57.8 2.95.8s2.2-.42 2.95-.8c.65-.33 1.18-.6 2.05-.6.9 0 1.4.25 2.05.6.75.38 1.58.8 2.95.8v-1.95c-.9 0-1.4-.25-2.05-.6-.75-.38-1.6-.8-2.95-.8zm0-4.45c-1.35 0-2.2.43-2.95.8-.65.32-1.18.6-2.05.6-.9 0-1.4-.25-2.05-.6-.75-.38-1.57-.8-2.95-.8s-2.2.43-2.95.8c-.65.32-1.17.6-2.05.6v1.95c1.35 0 2.2-.43 2.95-.8.65-.35 1.15-.6 2.05-.6s1.4.25 2.05.6c.75.38 1.57.8 2.95.8s2.2-.43 2.95-.8c.65-.35 1.15-.6 2.05-.6s1.4.25 2.05.6c.75.38 1.58.8 2.95.8v-1.95c-.9 0-1.4-.25-2.05-.6-.75-.38-1.6-.8-2.95-.8zm2.95-8.08c-.75-.38-1.58-.8-2.95-.8s-2.2.42-2.95.8c-.65.32-1.18.6-2.05.6-.9 0-1.4-.25-2.05-.6-.75-.37-1.57-.8-2.95-.8s-2.2.42-2.95.8c-.65.33-1.17.6-2.05.6v1.93c1.35 0 2.2-.43 2.95-.8.65-.33 1.17-.6 2.05-.6s1.4.25 2.05.6c.75.38 1.57.8 2.95.8s2.2-.43 2.95-.8c.65-.32 1.18-.6 2.05-.6.9 0 1.4.25 2.05.6.75.38 1.58.8 2.95.8V5.04c-.9 0-1.4-.25-2.05-.58zM17 8.09c-1.35 0-2.2.43-2.95.8-.65.35-1.15.6-2.05.6s-1.4-.25-2.05-.6c-.75-.38-1.57-.8-2.95-.8s-2.2.43-2.95.8c-.65.35-1.15.6-2.05.6v1.95c1.35 0 2.2-.43 2.95-.8.65-.32 1.18-.6 2.05-.6s1.4.25 2.05.6c.75.38 1.57.8 2.95.8s2.2-.43 2.95-.8c.65-.32 1.18-.6 2.05-.6.9 0 1.4.25 2.05.6.75.38 1.58.8 2.95.8V9.49c-.9 0-1.4-.25-2.05-.6-.75-.38-1.6-.8-2.95-.8z"/></svg>
+				</div>
+				<div id="button-multi" class="function-button">
+						<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 5H1v16c0 1.1.9 2 2 2h16v-2H3V5zm11 7V8c0-1.11-.9-2-2-2h-1c-1.1 0-2 .89-2 2v1c0 1.11.9 2 2 2h1v1H9v2h3c1.1 0 2-.89 2-2zm-3-3V8h1v1h-1zm10-8H7c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm0 8h-2V7h-2v2h-2v2h2v2h2v-2h2v6H7V3h14v6z"/></svg>
+				</div>
+			</div>
+			<div id="spine-1">
+				<!-- <div id="button-red" class="button" value="0" onclick="takeColor('#EF476F')"></div>
+				<div id="button-yellow" class="button" value="0" onclick="takeColor('#FFD166')"></div>				
+				<div id="button-green" class="button" value="0" onclick="takeColor('#06D6A0')"></div>				
+				<div id="button-lightblue" class="button" value="0" onclick="takeColor('#118AB2')"></div>
+				<div id="button-blue" class="button" value="0" onclick="takeColor('#073B4C')"></div>	 -->
+				<div id="button-red" class="button" value="0" onclick="takeColor('red')"></div>
+				<div id="button-yellow" class="button" value="0" onclick="takeColor('yellow')"></div>				
+				<div id="button-green" class="button" value="0" onclick="takeColor('green')"></div>				
+				<div id="button-lightblue" class="button" value="0" onclick="takeColor('lightblue')"></div>
+				<div id="button-blue" class="button" value="0" onclick="takeColor('blue')"></div>			
+			</div>
+			<div id="spine-2">
+				<div id="button-white" class="button" value="0" onclick="takeColor('white')"></div>
+				<div id="button-orange" class="button" value="0" onclick="takeColor('orange')"></div>				
+				<div id="button-purple" class="button" value="0" onclick="takeColor('purple')"></div>				
+				<div id="button-aqua" class="button" value="0" onclick="takeColor('aqua')"></div>			
+				<div id="button-pink" class="button" value="0" onclick="takeColor('pink')"></div>
+			</div>
+			<div id="lo-time-name">Low Time</div>
+			<div id="lo-time">
+				<form action="#">
+					<p class="range-field">
+					  	<input type="range" id="test5" min="10" max="1000"/>
+					</p>
+				</form>
+			</div>
+			<div id="hi-time-name">High Time</div>
+			<div id="hi-time">
+				<form action="#">
+					<p class="range-field">
+						<input type="range" id="test5" min="10" max="1000"/>
+					</p>
+				</form>
+			</div>
+		</div>
+		<!-- would usually put the <script> in <head> -->
+		<script type="text/javascript" src="../static/assets/scripts/color_control.js"></script>
 	</body>
 </html>
