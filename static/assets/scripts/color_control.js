@@ -89,15 +89,10 @@ document.getElementById("button-purple").onclick = purpleButtonClicked;
 
 function send_data(color) {
     console.log("Sending Data");
-    var request_data =color;
-    console.log("data: " + request_data);
-    $.post({
-        url: "/",
-        data : { request_data: request_data},
-        success : function(json) {
-            $("# ").hide();
-            console.log("Sending Data Complete");
-        }
-    })
+    var xhr = new XMLHttpRequest();
+    var data = new FormData();
+    data.append('color', color);
+    xhr.open("POST", "/", true);
+    xhr.send(data);
+    console.log(data);
 }
-

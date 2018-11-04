@@ -87,6 +87,9 @@ colors = {
 # Goal: Web Requests will initiate GPIO methods
 @app.route("/", methods=['GET', 'POST'])
 def main():
+   if request.method == "POST":
+       color = request.values.get('color')
+       get_lit(color)
    return render_template('main.html')
 
 @app.route('/on/<color>', methods=['GET', 'POST'])
