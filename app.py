@@ -12,12 +12,6 @@ app = Flask(__name__)
 
 GPIO.setmode(GPIO.BCM)
 
-pins = {
-   23 : {'name' : 'Red', 'state' : GPIO.LOW}, 
-   24 : {'name' : 'Green', 'state' : GPIO.LOW},
-   25 : {'name' : 'Blue', 'state' : GPIO.LOW}
-}
-
 GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 frequency = 70
@@ -25,27 +19,6 @@ need_to_kill = False
 PID = ""
 current_color = ""
 current_times = [0, 0]
-
-
-def clear_lights():
-    global need_to_kill
-    if need_to_kill:
-        os.system("kill " + PID)
-        need_to_kill = False
-    pi.wave_clear()
-    pi.set_mode(23, pigpio.OUTPUT)
-    pi.set_mode(24, pigpio.OUTPUT)
-    pi.set_mode(25, pigpio.OUTPUT)
-
-    pi.set_PWM_frequency(23, frequency)
-    pi.set_PWM_frequency(24, frequency)
-    pi.set_PWM_frequency(25, frequency)
-
-    pi.set_PWM_dutycycle(23, 0)
-    pi.set_PWM_dutycycle(24, 0)
-    pi.set_PWM_dutycycle(25, 0)
-
-clear_lights()
 
 def convert(color):
     color['green'] *= 200/255
@@ -82,39 +55,45 @@ colors = {
 
     # Navy (0, 0, 128)
     'navy' : convert({'red': 0.0, 'green': 0.0, 'blue': 128.0}),
+
+    # Light Blue
+    'lightblue': {'red': 0.0, 'green': 0.0, 'blue': 255.0},
 }
 
-# Goal: Web Requests will initiate GPIO methods
 @app.route("/", methods=['GET', 'POST'])
 def main():
    if request.method == "POST":
        color = request.values.get('color')
-       get_lit(color)
+       off = request.values.get('off')
+       if color:
+           get_lit(color)
+       if off:
+           clear_lights()
    return render_template('main.html')
 
 @app.route('/on/<color>', methods=['GET', 'POST'])
 def on(color):
     clear_lights()
-    print(color)
     color = color.lower()
-    pi.set_PWM_dutycycle(23, 0)
-    pi.set_PWM_dutycycle(24, 0)
-    pi.set_PWM_dutycycle(25, 0)
     if color in colors:
         get_lit(color)
         global current_color
         current_color = color
     return render_template('main.html')
 
+@app.route('/off/', methods=['GET', 'POST'])
+def off():
+    clear_lights()
+    return render_template('main.html')
+
 @app.route('/flash/<color>/<hi_time>/<lo_time>', methods=['GET', 'POST'])
 def flash(color, hi_time, lo_time):
     if not color in colors:
         return render_template('main.html')
+    
     global current_color, current_times
     current_color = color
     current_times = [hi_time, lo_time]
-    #hi_time = int(hi_time)
-    #lo_time = int(lo_time)
     clear_lights()
 
     os.system("python3 features.py "+ color + " " + hi_time + " " + lo_time + " &")
@@ -129,28 +108,39 @@ def flash(color, hi_time, lo_time):
 
     return render_template('main.html')
 
-def custom_pwm(pin, duty, length):
-    print(length-2650)
-    toReturn = [pigpio.pulse(1<<pin, 0, duty*10), pigpio.pulse(0, 1<<pin, 2560 - duty*10)] * max(length - 2560, 1)
-    return toReturn
-
 def get_lit(color):
     color_dict = colors[color]
     pi.set_PWM_dutycycle(23, color_dict['red'])
     pi.set_PWM_dutycycle(24, color_dict['green'])
     pi.set_PWM_dutycycle(25, color_dict['blue'])
-
-@app.route('/off/', methods=['GET', 'POST'])
-def off():
-    print('Turning off the lights')
-    clear_lights()
-    global current_color
+    
+def clear_lights():
+    global need_to_kill, current_color
+    
+    if need_to_kill:
+        os.system("kill " + PID)
+        need_to_kill = False
+        
     current_color = ""
+    
+    pi.wave_clear()
+    pi.set_mode(23, pigpio.OUTPUT)
+    pi.set_mode(24, pigpio.OUTPUT)
+    pi.set_mode(25, pigpio.OUTPUT)
+
+    pi.set_PWM_frequency(23, frequency)
+    pi.set_PWM_frequency(24, frequency)
+    pi.set_PWM_frequency(25, frequency)
+
     pi.set_PWM_dutycycle(23, 0)
     pi.set_PWM_dutycycle(24, 0)
     pi.set_PWM_dutycycle(25, 0)
-    return render_template('main.html')
-
+    
+def custom_pwm(pin, duty, length):
+    print(length - 2650)
+    pulses = [pigpio.pulse(1<<pin, 0, duty*10), pigpio.pulse(0, 1<<pin, 2560 - duty*10)] * max(length - 2560, 1)
+    return pulses
 
 if __name__ == "__main__":
+   clear_lights()
    app.run(host='0.0.0.0', debug=True)
