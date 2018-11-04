@@ -179,8 +179,6 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
         current_times = [str(float(hi_time)), str(float(lo_time))]
     except:
         current_times = [str(float(hi_time)), "0"]
-    current_feature = "multi " + feature
-    clear_lights()
 
     if feature == '23':
         feature = 'on'
@@ -191,6 +189,9 @@ def multi_fx(feature, colorlist, hi_time, lo_time = ""):
 
     if feature == 'on':
         lo_time = ""
+
+    current_feature = "multi " + feature
+    clear_lights()
 
     colorlist = colorlist.replace(' ', ',')
 
