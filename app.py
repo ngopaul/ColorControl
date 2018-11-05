@@ -68,7 +68,7 @@ def return_colors():
 
 @app.route("/", methods=['GET', 'POST'])
 def main():
-    global current_color, current_times, last_command
+    global current_color, current_times, last_command, current_feature
     if request.method == "POST":
         info = request.values.get('info')
         times = request.values.get('times')
@@ -84,7 +84,8 @@ def main():
             current_times = times.split(",")
             print(current_times)
             if current_feature == 'flash':
-                last_command = 'off'
+                last_command = 'on'
+                current_feature = 'on'
                 get_lit_safe(current_color)
             else:
                 if current_color == "":
@@ -94,7 +95,8 @@ def main():
             # toggle
             current_times = times.split(",")
             if current_feature == 'breathe':
-                last_command = 'off'
+                last_command = 'on'
+                current_feature = 'on'
                 get_lit_safe(current_color)
             else:
                 breathe_fx(current_color, current_times[0], current_times[1])
