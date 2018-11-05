@@ -308,15 +308,15 @@ function offButtonClicked() {
 document.getElementById("button-off").onclick = offButtonClicked;	
 
 //  ON
-function onButtonClicked() {
-    console.log("on");
-    if (multi_clicked == true) {
-        send_data("multi on", [200, 200], light_colors);
-    } else {
-        send_data("on", [200, 200]);
-    }
-}
-document.getElementById("button-on").onclick = onButtonClicked;	
+// function onButtonClicked() {
+//     console.log("on");
+//     if (multi_clicked == true) {
+//         send_data("multi on", [200, 200], light_colors);
+//     } else {
+//         send_data("on", [200, 200]);
+//     }
+// }
+// document.getElementById("button-on").onclick = onButtonClicked;	
 
 //  FLASH
 function flashButtonClicked() {
@@ -326,6 +326,7 @@ function flashButtonClicked() {
     } else {
         send_data("flash", [200, 200]);
     }
+    console.log("fsd");
 }
 document.getElementById("button-flash").onclick = flashButtonClicked;	
 
