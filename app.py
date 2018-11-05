@@ -114,8 +114,13 @@ def main():
 
 def times_to_cur_times(times):
     temp = repr(times).split(',')
-    temp = temp.replace('\'', '')
-    return temp
+    for i in range(len(temp)):
+        temp[i] = temp[i].replace('\'', '')
+    toreturn = ""
+    for item in temp:
+        toreturn = toreturn + item + ","
+    return toreturn[:-1]
+
 
 @app.route('/on/<color>', methods=['GET', 'POST'])
 def on(color):
