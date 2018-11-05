@@ -209,7 +209,7 @@ def multi(feature, colorlist, hi_time, lo_time = ""):
     return render_template('main.html')
 
 def multi_fx(feature, colorlist, hi_time, lo_time = ""):
-    print("Multi-" + feature + "ing" + colorlist + ", times: " + hi_Time, lo_time)
+    print("Multi-" + feature + "ing" + colorlist + ", times: " + hi_time, lo_time)
     colorlist2 = parse_multi_colors(colorlist)
     for color in colorlist2:
         if not color in colors:
