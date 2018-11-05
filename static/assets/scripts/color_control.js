@@ -312,6 +312,8 @@ document.getElementById("button-off").onclick = offButtonClicked;
 //     console.log("on");
 //     if (multi_clicked == true) {
 //         send_data("multi on", [200, 200], light_colors);
+//         console.log("Reloading webpage...");
+//         location.reload();
 //     } else {
 //         send_data("on", [200, 200]);
 //     }
@@ -323,6 +325,8 @@ function flashButtonClicked() {
     console.log("flash");
     if (multi_clicked == true) {
         send_data("multi flash", "500,500", light_colors);
+        console.log("Reloading webpage...");
+        location.reload();
     } else {
         send_data("flash", "500,500");
     }
@@ -335,11 +339,11 @@ function breatheButtonClicked() {
     console.log("breathe");
     if (multi_clicked == true) {
         send_data("multi breathe", "2000,2000", light_colors);
+        console.log("Reloading webpage...");
+        location.reload();
     } else {
         send_data("breathe", "2000,2000");
     }
-    console.log("Reloading webpage...")
-    location.reload()
 }
 document.getElementById("button-breathe").onclick = breatheButtonClicked;	
 
