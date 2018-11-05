@@ -84,6 +84,7 @@ def main():
             current_times = times.split(",")
             print(current_times)
             if current_feature == 'flash':
+                last_command = 'off'
                 get_lit_safe(current_color)
             else:
                 if current_color == "":
@@ -93,6 +94,7 @@ def main():
             # toggle
             current_times = times.split(",")
             if current_feature == 'breathe':
+                last_command = 'off'
                 get_lit_safe(current_color)
             else:
                 breathe_fx(current_color, current_times[0], current_times[1])

@@ -322,9 +322,9 @@ document.getElementById("button-off").onclick = offButtonClicked;
 function flashButtonClicked() {
     console.log("flash");
     if (multi_clicked == true) {
-        send_data("multi flash", "2000,2000", light_colors);
+        send_data("multi flash", "500,500", light_colors);
     } else {
-        send_data("flash", "2000,2000");
+        send_data("flash", "500,500");
     }
     console.log("fsd");
 }
