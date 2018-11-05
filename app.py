@@ -85,19 +85,23 @@ def main():
             else:
                 if current_color == "":
                     current_color = 'white'
-                flash_fx(current_color, times[0], times[1])
+                flash_fx(current_color, current_times[0], current_times[1])
         elif info == 'breathe':
             # toggle
+            current_times = repr(times).split(',')
             if current_feature == 'breathe':
                 get_lit_safe(current_color)
             else:
-                breathe_fx(current_color, times[0], times[1])
+                breathe_fx(current_color, current_times[0], current_times[1])
         elif info == 'multi breathe':
-            multi_fx("breathe", repr(array).replace('[', '').replace(']', '').replace(' ', ''), times[0], times[1])
+            current_times = repr(times).split(',')
+            multi_fx("breathe", repr(array).replace('[', '').replace(']', '').replace(' ', ''), current_times[0], current_times[1])
         elif info == 'multi flash':
-            multi_fx("flash", repr(array).replace('[', '').replace(']', '').replace(' ', ''), times[0], times[1])
+            current_times = repr(times).split(',')
+            multi_fx("flash", repr(array).replace('[', '').replace(']', '').replace(' ', ''), current_times[0], current_times[1])
         elif info == 'multi on':
-            multi_fx("on", repr(array).replace('[', '').replace(']', '').replace(' ', ''), times[0], times[1])
+            current_times = repr(times).split(',')
+            multi_fx("on", repr(array).replace('[', '').replace(']', '').replace(' ', ''), current_times[0], current_times[1])
         elif info in colors:
             if last_command == 'off' or last_command == '':
                 current_color = info
