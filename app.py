@@ -80,7 +80,7 @@ def main():
             execute_prev()
         elif info == 'flash':
             # toggle
-            current_times = list(times)
+            current_times = times.split(",")
             print(current_times)
             if current_feature == 'flash':
                 get_lit_safe(current_color)
@@ -90,22 +90,23 @@ def main():
                 flash_fx(current_color, current_times[0], current_times[1])
         elif info == 'breathe':
             # toggle
-            current_times = list(times)
+            current_times = times.split(",")
             if current_feature == 'breathe':
                 get_lit_safe(current_color)
             else:
                 breathe_fx(current_color, current_times[0], current_times[1])
         elif info == 'multi breathe':
-            current_times = list(times)
+            current_times = times.split(",")
             multi_fx("breathe", comma_separate(array), current_times[0], current_times[1])
         elif info == 'multi flash':
-            current_times = list(times)
+            current_times = times.split(",")
             multi_fx("flash", comma_separate(array), current_times[0], current_times[1])
         elif info == 'multi on':
-            current_times = list(times)
+            current_times = times.split(",")
             multi_fx("on", comma_separate(array), current_times[0], current_times[1])
         elif info in colors:
             if last_command == 'off' or last_command == '':
+                print("Turning the lights back on: color= " + info)
                 current_color = info
                 get_lit_safe(info)
             else:
@@ -268,6 +269,7 @@ def multi_space_to_comma(colors):
     return colors.replace(' ', ',')
     
 def execute_prev():
+    print("Executing previous: " + current_feature)
     if current_feature == 'on':
         get_lit_safe(current_color)
     elif current_color == 'flash':
