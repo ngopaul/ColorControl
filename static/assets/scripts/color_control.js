@@ -307,7 +307,7 @@ function offButtonClicked() {
 }
 document.getElementById("button-off").onclick = offButtonClicked;	
 
-//  FLASH
+//  ON
 function onButtonClicked() {
     console.log("on");
     if (multi_clicked == true) {
