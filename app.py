@@ -80,7 +80,7 @@ def main():
             execute_prev()
         elif info == 'flash':
             # toggle
-            current_times = times_to_cur_times(times)
+            current_times = list(times)
             print(current_times)
             if current_feature == 'flash':
                 get_lit_safe(current_color)
@@ -90,20 +90,20 @@ def main():
                 flash_fx(current_color, current_times[0], current_times[1])
         elif info == 'breathe':
             # toggle
-            current_times = times_to_cur_times(times)
+            current_times = list(times)
             if current_feature == 'breathe':
                 get_lit_safe(current_color)
             else:
                 breathe_fx(current_color, current_times[0], current_times[1])
         elif info == 'multi breathe':
-            current_times = times_to_cur_times(times)
-            multi_fx("breathe", repr(array).replace('[', '').replace(']', '').replace(' ', ''), current_times[0], current_times[1])
+            current_times = list(times)
+            multi_fx("breathe", comma_separate(array), current_times[0], current_times[1])
         elif info == 'multi flash':
-            current_times = times_to_cur_times(times)
-            multi_fx("flash", repr(array).replace('[', '').replace(']', '').replace(' ', ''), current_times[0], current_times[1])
+            current_times = list(times)
+            multi_fx("flash", comma_separate(array), current_times[0], current_times[1])
         elif info == 'multi on':
-            current_times = times_to_cur_times(times)
-            multi_fx("on", repr(array).replace('[', '').replace(']', '').replace(' ', ''), current_times[0], current_times[1])
+            current_times = list(times)
+            multi_fx("on", comma_separate(array), current_times[0], current_times[1])
         elif info in colors:
             if last_command == 'off' or last_command == '':
                 current_color = info
@@ -113,10 +113,12 @@ def main():
                 execute_prev()
     return render_template('main.html')
 
-def times_to_cur_times(times):
+def comma_separate(times):
     temp = repr(times).split(',')
     for i in range(len(temp)):
         temp[i] = temp[i].replace('\'', '')
+        temp[i] = temp[i].replace('[', '')
+        temp[i] = temp[i].replace(']', '')
     toreturn = ""
     for item in temp:
         toreturn = toreturn + item + ","
