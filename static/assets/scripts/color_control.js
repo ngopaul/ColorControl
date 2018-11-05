@@ -44,7 +44,7 @@ function redButtonClicked() {
     if (multi_clicked == false) {
         setBackgroundColor("#EF476F");
         console.log("red");
-        send_data("red");
+        send_data_one("red");
     } else {
         if (redclicked == true) {
             setBackgroundColor("white");
@@ -360,6 +360,17 @@ function send_data(info, times = [], array = []) {
     data.append('info', info);
     data.append('times', times);
     data.append('array', array);
+    xhr.open("POST", "/", true);
+    xhr.send(data);
+    console.log(data);
+}
+
+function send_data_one(info) {
+    console.log("Sending Data");
+    console.log(info);
+    var xhr = new XMLHttpRequest();
+    var data = new FormData();
+    data.append('info', info);
     xhr.open("POST", "/", true);
     xhr.send(data);
     console.log(data);
