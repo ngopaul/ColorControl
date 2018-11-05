@@ -79,7 +79,7 @@ def main():
             execute_prev()
         elif info == 'flash':
             # toggle
-            current_times = times.split(',')
+            current_times = repr(times).split(',')
             if current_feature == 'flash':
                 get_lit_safe(current_color)
             else:
