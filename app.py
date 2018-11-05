@@ -14,6 +14,7 @@ GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
+pins = [23, 24, 25]
 frequency = 70
 need_to_kill = False
 PID = ""
@@ -149,22 +150,18 @@ def flash(color, hi_time, lo_time):
     return render_template('main.html')
 
 def flash_fx(color, hi_time, lo_time):
+    print("Flashing lights " + color + ", times: " + hi_time, lo_time)
     color = color.lower()
     if not color in colors:
         return
-    global current_color, current_times, current_feature, last_command
+    global current_color, current_times, current_feature, last_command, need_to_kill, PID
     last_command = "flash"
     current_color = color
     current_times = [str(float(hi_time)), str(float(lo_time))]
     current_feature = "flash"
     clear_lights()
-
     os.system("python3 features.py "+ "flash " + color + " " + hi_time + " " + lo_time + " &")
-
     y = subprocess.check_output(['pidof', 'python3'])
-    print(y)
-
-    global need_to_kill, PID
     need_to_kill = True
     PID = str(y).split(' ')[0][2:]
     print(PID)
@@ -172,32 +169,28 @@ def flash_fx(color, hi_time, lo_time):
     print(current_feature)
     print(current_times)
 
-@app.route('/breathe/<color>/<length>/<lo_time>', methods=['GET', 'POST'])
-def breathe(color, length, lo_time):
+@app.route('/breathe/<color>/<hi_time>/<lo_time>', methods=['GET', 'POST'])
+def breathe(color, hi_time, lo_time):
     color = color.lower()
     if not color in colors:
         return render_template('main.html')
-    breathe_fx(color, length, lo_time)
+    breathe_fx(color, hi_time, lo_time)
     return render_template('main.html')
 
-def breathe_fx(color, length, lo_time):
+def breathe_fx(color, hi_time, lo_time):
+    print("Breathing lights " + color + ", times: " + hi_time, lo_time)
     color = color.lower()
     print("Color: " + color)
     if not color in colors:
         return
-    global current_color, current_times, current_feature, last_command
+    global current_color, current_times, current_feature, last_command, need_to_kill, PID
     last_command = "breathe"
     current_color = color
-    current_times = [str(float(length)), str(float(lo_time))]
+    current_times = [str(float(hi_time)), str(float(lo_time))]
     current_feature = "breathe"
     clear_lights()
-
-    os.system("python3 features.py "+ "breathe " + color + " " + length + " " + lo_time + " &")
-
+    os.system("python3 features.py "+ "breathe " + color + " " + hi_time + " " + lo_time + " &")
     y = subprocess.check_output(['pidof', 'python3'])
-    print(y)
-
-    global need_to_kill, PID
     need_to_kill = True
     PID = str(y).split(' ')[0][2:]
     print(PID)
@@ -216,6 +209,7 @@ def multi(feature, colorlist, hi_time, lo_time = ""):
     return render_template('main.html')
 
 def multi_fx(feature, colorlist, hi_time, lo_time = ""):
+    print("Multi-" + feature + "ing" + colorlist + ", times: " + hi_Time, lo_time)
     colorlist2 = parse_multi_colors(colorlist)
     for color in colorlist2:
         if not color in colors:
@@ -334,16 +328,12 @@ def sound():
     return render_template('main.html')
 
 def sound_fx():
-    global current_feature
+    global current_feature, last_command, need_to_kill, PID
     current_feature = "sound"
+    last_command = "sound"
     clear_lights()
-
     os.system("python3 features.py "+ "sound " + "&")
-
     y = subprocess.check_output(['pidof', 'python3'])
-    print(y)
-
-    global need_to_kill, PID
     need_to_kill = True
     PID = str(y).split(' ')[0][2:]
     print(PID)
@@ -364,28 +354,14 @@ def get_lit_safe(color):
     
 def clear_lights():
     global need_to_kill
-    
     if need_to_kill:
         os.system("kill " + PID)
         need_to_kill = False
-    
     pi.wave_clear()
-    pi.set_mode(23, pigpio.OUTPUT)
-    pi.set_mode(24, pigpio.OUTPUT)
-    pi.set_mode(25, pigpio.OUTPUT)
-
-    pi.set_PWM_frequency(23, frequency)
-    pi.set_PWM_frequency(24, frequency)
-    pi.set_PWM_frequency(25, frequency)
-
-    pi.set_PWM_dutycycle(23, 0)
-    pi.set_PWM_dutycycle(24, 0)
-    pi.set_PWM_dutycycle(25, 0)
-    
-def custom_pwm(pin, duty, length):
-    print(length - 2650)
-    pulses = [pigpio.pulse(1<<pin, 0, duty*10), pigpio.pulse(0, 1<<pin, 2560 - duty*10)] * max(length - 2560, 1)
-    return pulses
+    for pin in pins:
+        pi.set_mode(pin, pigpio.OUTPUT)
+        pi.set_PWM_frequency(pin, frequency)
+        pi.set_PWM_dutycycle(pin, 0)
 
 if __name__ == "__main__":
    clear_lights()
