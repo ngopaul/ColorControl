@@ -79,7 +79,8 @@ def main():
             execute_prev()
         elif info == 'flash':
             # toggle
-            current_times = repr(times).split(',')
+            current_times = times_to_cur_times(times)
+            print(current_times)
             if current_feature == 'flash':
                 get_lit_safe(current_color)
             else:
@@ -88,19 +89,19 @@ def main():
                 flash_fx(current_color, current_times[0], current_times[1])
         elif info == 'breathe':
             # toggle
-            current_times = repr(times).split(',')
+            current_times = times_to_cur_times(times)
             if current_feature == 'breathe':
                 get_lit_safe(current_color)
             else:
                 breathe_fx(current_color, current_times[0], current_times[1])
         elif info == 'multi breathe':
-            current_times = repr(times).split(',')
+            current_times = times_to_cur_times(times)
             multi_fx("breathe", repr(array).replace('[', '').replace(']', '').replace(' ', ''), current_times[0], current_times[1])
         elif info == 'multi flash':
-            current_times = repr(times).split(',')
+            current_times = times_to_cur_times(times)
             multi_fx("flash", repr(array).replace('[', '').replace(']', '').replace(' ', ''), current_times[0], current_times[1])
         elif info == 'multi on':
-            current_times = repr(times).split(',')
+            current_times = times_to_cur_times(times)
             multi_fx("on", repr(array).replace('[', '').replace(']', '').replace(' ', ''), current_times[0], current_times[1])
         elif info in colors:
             if last_command == 'off' or last_command == '':
@@ -110,6 +111,11 @@ def main():
                 current_color = info
                 execute_prev()
     return render_template('main.html')
+
+def times_to_cur_times(times):
+    temp = repr(times).split(',')
+    temp = temp.replace('\'', '')
+    return temp
 
 @app.route('/on/<color>', methods=['GET', 'POST'])
 def on(color):
