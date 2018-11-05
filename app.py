@@ -68,13 +68,14 @@ def return_colors():
 
 @app.route("/", methods=['GET', 'POST'])
 def main():
-    global current_color, current_times
+    global current_color, current_times, last_command
     if request.method == "POST":
         info = request.values.get('info')
         times = request.values.get('times')
         array = request.values.get('array')
         print("recieved POST.", "info=", info, "times=", times, "array=", array)
         if info == 'off':
+            last_command = 'off'
             clear_lights()
         elif info == 'on':
             execute_prev()
