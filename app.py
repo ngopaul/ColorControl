@@ -272,15 +272,15 @@ def execute_prev():
     print("Executing previous: " + current_feature)
     if current_feature == 'on':
         get_lit_safe(current_color)
-    elif current_color == 'flash':
+    elif current_feature == 'flash':
         flash_fx(current_color, current_times[0], current_times[1])
-    elif current_color == 'breathe':
+    elif current_feature == 'breathe':
         breathe_fx(current_color, current_times[0], current_times[1])
-    elif current_color == 'multi on':
+    elif current_feature == 'multi on':
         multi_fx('on', current_color, current_times[0], current_times[1])
-    elif current_color == 'multi flash':
+    elif current_feature == 'multi flash':
         multi_fx('flash', current_color, current_times[0], current_times[1])
-    elif current_color == 'multi breathe':
+    elif current_feature == 'multi breathe':
         multi_fx('breathe', current_color, current_times[0], current_times[1])
 
 @app.route('/speedup', methods=['GET', 'POST'])
