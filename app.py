@@ -97,7 +97,7 @@ def main():
             multi_fx("on", repr(array).replace('[', '').replace(']', '').replace(' ', ''), times[0], times[1])
         elif info in colors:
             if last_command == 'off' or last_command == '':
-                get_lit_safe(current_color)
+                get_lit_safe(info)
             else:
                 current_color = info
                 execute_prev()
