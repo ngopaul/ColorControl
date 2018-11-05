@@ -67,7 +67,7 @@ def return_colors():
 
 @app.route("/", methods=['GET', 'POST'])
 def main():
-    global current_color
+    global current_color, current_times
     if request.method == "POST":
         info = request.values.get('info')
         times = request.values.get('times')
@@ -79,9 +79,12 @@ def main():
             execute_prev()
         elif info == 'flash':
             # toggle
+            current_times = times.split(',')
             if current_feature == 'flash':
                 get_lit_safe(current_color)
             else:
+                if current_color == "":
+                    current_color = 'white'
                 flash_fx(current_color, times[0], times[1])
         elif info == 'breathe':
             # toggle
