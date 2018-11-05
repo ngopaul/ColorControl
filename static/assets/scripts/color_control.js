@@ -322,9 +322,9 @@ document.getElementById("button-off").onclick = offButtonClicked;
 function flashButtonClicked() {
     console.log("flash");
     if (multi_clicked == true) {
-        send_data("multi flash", [200, 200], light_colors);
+        send_data("multi flash", [2000, 2000], light_colors);
     } else {
-        send_data("flash", [200, 200]);
+        send_data("flash", [2000, 2000]);
     }
     console.log("fsd");
 }
@@ -334,9 +334,9 @@ document.getElementById("button-flash").onclick = flashButtonClicked;
 function breatheButtonClicked() {
     console.log("breathe");
     if (multi_clicked == true) {
-        send_data("multi breathe", [200, 200], light_colors);
+        send_data("multi breathe", [2000, 2000], light_colors);
     } else {
-        send_data("breathe", [200, 200]);
+        send_data("breathe", [2000, 2000]);
     }
     console.log("Reloading webpage...")
     location.reload()
