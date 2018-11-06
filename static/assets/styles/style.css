@@ -102,6 +102,13 @@ body {
     left: 50%;
     transform: translate(-200%, 1000%)
 }
+#result1 {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-440%, 1050%)
+}
 
 #hi-time {
     display: flex;
@@ -116,6 +123,13 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(95%, 1000%)
+}
+#result2 {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(350%, 1050%)
 }
 /**
  * colors
