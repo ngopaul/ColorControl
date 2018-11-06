@@ -111,6 +111,8 @@ def main():
             multi_fx("on", comma_separate(array), current_times[0], current_times[1])
         elif info in colors:
             if last_command == 'off' or last_command == '':
+                last_command = 'on'
+                current_feature = 'on'
                 print("Turning the lights back on: color= " + info)
                 current_color = info
                 get_lit_safe(info)
