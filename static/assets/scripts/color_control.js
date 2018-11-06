@@ -8,11 +8,15 @@ function setBackgroundColor(color) {
 }
 document.getElementById("container").onclick = setBackgroundColor;	
 
+
+// function takeColor(color) {
+//     document.getElementById('button-'+color).onclick = universe;
+// }
 // function universe(color) {
 //     if (multi_clicked == false) {
-//         setBackgroundColor("color");
-//         console.log("color");
-//         send_data("color");
+//         setBackgroundColor(color);
+//         console.log(color);
+//         send_data(color);
 //     } else {
 //         if (document.getElementById("button-" + color).value == "1") {
 //             setBackgroundColor("white");
@@ -28,14 +32,8 @@ document.getElementById("container").onclick = setBackgroundColor;
 //             setBackgroundColor("color");
 //             document.getElementById("button-" + color).value = "1";
 //         }
+//         console.log(light_colors);
 //     }
-//     console.log(document.getElementById("button-" + color).value);
-//     console.log(light_colors);
-// }
-// document.getElementById("button-"+color).onclick = universe;
-
-// function take_colors(color) {
-//     document.getElementById("button-"+color).onclick = universe;
 // }
 
 // RED
@@ -307,18 +305,18 @@ function offButtonClicked() {
 }
 document.getElementById("button-off").onclick = offButtonClicked;	
 
-//  ON
-// function onButtonClicked() {
-//     console.log("on");
-//     if (multi_clicked == true) {
-//         send_data("multi on", [200, 200], light_colors);
-//         console.log("Reloading webpage...");
-//         location.reload();
-//     } else {
-//         send_data("on", [200, 200]);
-//     }
-// }
-// document.getElementById("button-on").onclick = onButtonClicked;	
+// ON
+function onButtonClicked() {
+    console.log("on");
+    if (multi_clicked == true) {
+        send_data("multi on", [200, 200], light_colors);
+        console.log("Reloading webpage...");
+        location.reload();
+    } else {
+        send_data("on", [200, 200]);
+    }
+}
+document.getElementById("button-on").onclick = onButtonClicked;	
 
 //  FLASH
 function flashButtonClicked() {
