@@ -353,6 +353,7 @@ function multiButtonClicked() {
 }
 document.getElementById("button-multi").onclick = multiButtonClicked;	
 
+// LO TIME
 var p1 = document.getElementById("lo"),
     res1 = document.getElementById("result1");
 
