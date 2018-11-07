@@ -419,6 +419,7 @@ function loadXMLDoc() {
     // var sec = document.getElementById('secret').value
     // var postVars = 'username='+un+'&secret='+sec
     // req.send(postVars)
+    req.send('')
     
     return false
 }
