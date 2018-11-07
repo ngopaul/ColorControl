@@ -397,6 +397,32 @@ function send_data_one(info) {
     console.log(data);
 }
 
+function loadXMLDoc() {
+    var req = new XMLHttpRequest()
+    req.onreadystatechange = function() {
+        if (req.readyState == 4) {
+            if (req.status != 200) {
+                //error handling code here
+            }
+            else {
+                var response = JSON.parse(req.responseText)
+                document.getElementById('currentState').innerHTML = response.currentState
+                document.getElementById('currentColor').innerHTML = response.currentColor
+                document.getElementById('currentTimes').innerHTML = response.currentTimes
+            }
+        }
+    }
+
+    req.open('POST', '/status')
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    var un = document.getElementById('scname').value
+    var sec = document.getElementById('secret').value
+    var postVars = 'username='+un+'&secret='+sec
+    req.send(postVars)
+    
+    return false
+}
+
 // drag bar
 $(document).ready(function() {
     M.updateTextFields();

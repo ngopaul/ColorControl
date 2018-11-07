@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import time
 import RPi.GPIO as GPIO
 import pigpio
@@ -121,6 +121,11 @@ def main():
                 execute_prev()
     return render_template('main.html')
 
+@app.route('/status', methods = ['POST'])
+def ajax_request():
+    username = request.form['username']
+    return jsonify(username=username, currentState= current_feature, currentColor= current_color, currentTimes= current_times)
+
 def comma_separate(times):
     temp = repr(times).split(',')
     for i in range(len(temp)):
@@ -132,6 +137,7 @@ def comma_separate(times):
         toreturn = toreturn + item + ","
     return toreturn[:-1]
 
+@app.route('')
 
 @app.route('/on/<color>', methods=['GET', 'POST'])
 def on(color):

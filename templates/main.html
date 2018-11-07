@@ -35,6 +35,14 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	</head>
 	<body>
+		<form action="" method="POST">
+			<input type="text" name="scname" id="scname">
+			<input type="hidden" name="secret" id="secret" value="shhh">
+			<input type="button" value="Submit" onclick="return loadXMLDoc()">
+		</form>
+		<div id="currentState"></div>
+		<div id="currentColor"></div>
+		<div id="currentTimes"></div>
 		<div id="container">
 			<div id=color-functions>
 				<div id="button-on" class="function-button">
