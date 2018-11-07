@@ -123,8 +123,7 @@ def main():
 
 @app.route('/status', methods = ['POST'])
 def ajax_request():
-    username = request.form['username']
-    return jsonify(username=username, currentState= 'off' if last_command == 'off' else current_feature, currentColor= current_color, currentTimes= current_times)
+    return jsonify(currentState= 'off' if last_command == 'off' else current_feature, currentColor= current_color, currentTimes= current_times)
 
 def comma_separate(times):
     temp = repr(times).split(',')
