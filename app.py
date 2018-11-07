@@ -137,8 +137,6 @@ def comma_separate(times):
         toreturn = toreturn + item + ","
     return toreturn[:-1]
 
-@app.route('')
-
 @app.route('/on/<color>', methods=['GET', 'POST'])
 def on(color):
     color = color.lower()
