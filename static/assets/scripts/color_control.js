@@ -415,10 +415,10 @@ function loadXMLDoc() {
 
     req.open('POST', '/status')
     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    var un = document.getElementById('scname').value
-    var sec = document.getElementById('secret').value
-    var postVars = 'username='+un+'&secret='+sec
-    req.send(postVars)
+    // var un = document.getElementById('scname').value
+    // var sec = document.getElementById('secret').value
+    // var postVars = 'username='+un+'&secret='+sec
+    // req.send(postVars)
     
     return false
 }
