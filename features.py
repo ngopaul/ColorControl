@@ -2,7 +2,16 @@ from app import clear_lights, return_colors, parse_multi_colors
 import time
 import sys
 import math
-import pigpio
+import pigpio, alsaaudio, time, audioop
+from struct import *
+
+card = 'sysdefault:CARD=Microphone'
+inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE,alsaaudio.PCM_NONBLOCK, 'sysdefault:CARD=1')
+inp.setchannels(0)
+inp.setrate(8000)
+inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
+inp.setperiodsize(160)
+max_value = 0
 
 pi = pigpio.pi()
 
@@ -79,7 +88,16 @@ def multi_breathe(colors, length, lo_time):
             time.sleep(length/100000)
         i = (i + 1) % n
         time.sleep(lo_time/1000)
-        
+
+def sound():
+    while True:
+        l,data = inp.read()
+        if l:
+            a = audioop.max(data, 2)
+            #print(a)
+            get_lit_more('white', min(1, a/1000))
+        time.sleep(.001)
+
 if __name__ == '__main__':
     func = sys.argv[1]
     if func == 'flash':
@@ -94,3 +112,5 @@ if __name__ == '__main__':
             multi_on(parse_multi_colors(sys.argv[3]), sys.argv[4])
         elif multi_type == 'flash':
             multi_flash(parse_multi_colors(sys.argv[3]), sys.argv[4], sys.argv[5])
+    elif func == 'sound':
+        sound()

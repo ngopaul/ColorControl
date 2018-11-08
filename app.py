@@ -159,7 +159,22 @@ def off():
     last_command = "off"
     clear_lights()
     return render_template('main.html')
-
+"""
+@app.route('/sound', methods=['GET', 'POST'])
+def sound():
+    global current_color, current_times, current_feature, last_command
+    current_feature = 'sound'
+    clear_lights()
+    last_command = 'sound'
+    os.system("python3 features.py " + "sound &")
+    y = subprocess.check_output(['pidof', 'python3'])
+    print(y)
+    global need_to_kill, PID
+    need_to_kill = True
+    PID = str(y).split(' ' )[0][2:]
+    print('PID:', PID)
+    print('Outputting sound.')
+"""
 @app.route('/flash/<color>/<hi_time>/<lo_time>', methods=['GET', 'POST'])
 def flash(color, hi_time, lo_time):
     color = color.lower()
