@@ -18,6 +18,7 @@ pins = [23, 24, 25]
 frequency = 70
 need_to_kill = False
 PID = ""
+
 last_command = ""
 current_color = ""
 current_feature = ""
@@ -66,6 +67,10 @@ colors = {
 def return_colors():
     return colors
 
+# no specification for multi!
+# restructure so that there are current states saved as objects
+# slow speed adjustment for breathe and flash
+
 @app.route("/", methods=['GET', 'POST'])
 def main():
     global current_color, current_times, last_command, current_feature
@@ -78,6 +83,7 @@ def main():
             last_command = 'off'
             clear_lights()
         elif info == 'on':
+            # need to make this handle multi to change
             execute_prev()
         elif info == 'flash':
             # toggle
