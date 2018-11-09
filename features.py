@@ -115,7 +115,6 @@ def sound():
                 last_val[2] = c
                 pi.set_PWM_dutycycle(24, min(b/300, 1))
                 pi.set_PWM_dutycycle(25, c/150)
-            last_val = a
         time.sleep(t)
 
 def exp_fn(prev, curr, t, tau):
