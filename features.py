@@ -5,7 +5,7 @@ import math
 import pigpio, alsaaudio, time, audioop
 from struct import *
 import numpy as np
-
+from math import *
 
 card = 'sysdefault:CARD=Microphone'
 inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE,alsaaudio.PCM_NONBLOCK,device="hw:1") #'sysdefault:CARD=1')
@@ -92,25 +92,34 @@ def multi_breathe(colors, length, lo_time):
         time.sleep(lo_time/1000)
 
 def sound():
-    last_val = 0
+    t = 0.001
+    tau = 0.001 
+    last_val = [0, 0, 0]
     while True:
         l,data = inp.read()
-        samples = np.fromstring(data, dtype=np.uint16)
+        samples = np.fromstring(data, dtype=np.int16)
         print(samples)
-        new_samp = list(filter(lambda a: 700 < a < 1000, samples))
-        c_samp = list(filter(lambda a: 400 < a < 700, samples))
+        b_samp = list(filter(lambda a: a > 700, samples))
+        c_samp = list(filter(lambda a: 50 < a < 200, samples))
         if l:
             a = audioop.max(data, 2)
-            if a < last_val:
-                a = (a + 2 * last_val)//3
-            #get_lit_more('red', min(1, a/1000))
-            if len(new_samp) > 0 and len(c_samp) > 0:
-                b = np.mean(new_samp) - 700
-                c = np.mean(c_samp) - 400
-                pi.set_PWM_dutycycle(24, b/300)
-                pi.set_PWM_dutycycle(25, c/300)
+            a = exp_fn(last_val[0], a, t, tau)
+            last_val[0] = a
+            get_lit_more('red', min(1, a/1000))
+            if len(b_samp) > 0 and len(c_samp) > 0:
+                b = np.mean(b_samp) - 700
+                b = exp_fn(last_val[0], a, t, tau)
+                last_val[1] = b
+                c = np.mean(c_samp) - 50
+                c = exp_fn(last_val[0], a, t, tau)
+                last_val[2] = c
+                pi.set_PWM_dutycycle(24, min(b/300, 1))
+                pi.set_PWM_dutycycle(25, c/150)
             last_val = a
-        time.sleep(.001)
+        time.sleep(t)
+
+def exp_fn(prev, curr, t, tau):
+    return curr + (prev - curr)*exp(-t/tau)
 
 if __name__ == '__main__':
     func = sys.argv[1]
