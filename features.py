@@ -113,8 +113,8 @@ def sound():
                 c = np.mean(c_samp) - 50
                 c = exp_fn(last_val[2], a, t, tau)
                 last_val[2] = c
-                pi.set_PWM_dutycycle(24, b/100)
-                pi.set_PWM_dutycycle(25, c/50)
+                pi.set_PWM_dutycycle(24, b * 255/50)
+                pi.set_PWM_dutycycle(25, c * 255/50)
         time.sleep(t)
 
 def exp_fn(prev, curr, t, tau):
