@@ -45,27 +45,22 @@ body {
  * button functions
  */
  #button-on {
-    background: white;
     display: flex;
     justify-content: center;
  }
  #button-off {
-    background: white;
     display: flex;
     justify-content: center;
  }
  #button-flash {
-    background: white;
     display: flex;
     justify-content: center;
  }
  #button-breathe {
-    background: white;
     display: flex;
     justify-content: center;
  }
  #button-multi {
-    background: white;
     display: flex;
     justify-content: center;
  }
@@ -78,19 +73,19 @@ body {
     transform: translate(-50%, -200%)
 }
 
-.function-button.inactive {
+.inactive {
     border: 2px solid #2f353f;
     color: #2f353f;
 }
-.function-button.inactive:hover {
+.inactive:hover {
     opacity: 0.6;
 }
-.function-button.active {
+.active {
     border: 2px solid #2f353f;
     background: #2f353f;
     color: white;
 }
- .function-button {
+.function-button {
     width: 124px;
     height: 60px;
     margin: 40px;
@@ -109,8 +104,8 @@ body {
 #lo-time {
     display: flex;
     position: absolute;
-    top: 50%;
     left: 50%;
+    top: 50%;
     transform: translate(-125%, 300%)
 }
 #lo-time-name {
@@ -170,6 +165,13 @@ body {
 }
 #button-aqua {
     background: aqua;
+    width: 80px;
+    height: 80px;
+    margin: 40px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 20%;
+    border: 5px solid rgb(65, 225, 236);
+    transition: transform ease 0.2s; 
 }
 #button-lightblue {
     background: #118AB2;
@@ -182,5 +184,12 @@ body {
 }
 #button-white {
     background: white;
+    width: 80px;
+    height: 80px;
+    margin: 40px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 20%;
+    border: 5px solid rgba(204, 204, 204, 0.671);
+    transition: transform ease 0.2s; 
 }
 

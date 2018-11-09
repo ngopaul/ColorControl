@@ -353,12 +353,7 @@ function multiButtonClicked() {
 }
 document.getElementById("button-multi").onclick = multiButtonClicked;	
 
-
-
-
-
-
-
+// FUNCTION BUTTON
 $(document).ready(function()  {
 	$(".function-button").click(function() {
 
@@ -369,27 +364,16 @@ $(document).ready(function()  {
 		if (!buttonActive) {
 			$(this).addClass("active");
 			$(this).removeClass("inactive");
-
-			// YOUR CODE HERE - PART 2.2
 			$(document.getElementsByClassName(buttonName)).show();
 
 		} else {
 			$(this).addClass("inactive");
 			$(this).removeClass("active");
-
-			// YOUR CODE HERE - PART 2.2
 			$(document.getElementsByClassName(buttonName)).hide();
 
 		}
 	});
 });
-
-
-
-
-
-
-
 
 // LO TIME
 var p1 = document.getElementById("lo"),
@@ -398,7 +382,7 @@ var p1 = document.getElementById("lo"),
 p1.addEventListener("input", function() {
     res1.innerHTML = p1.value;
     console.log(p1.value);
-}, false); 
+    }, false); 
 
 // HI TIME
 var p2 = document.getElementById("hi"),
@@ -407,8 +391,10 @@ var p2 = document.getElementById("hi"),
 p2.addEventListener("input", function() {
     res2.innerHTML = p2.value;
     console.log(p2.value);
-}, false); 
+    }, false); 
 
+
+// SEND DATA
 function send_data(info, times = [], array = []) {
     console.log("Sending Data");
     console.log("Info: "+ info);
