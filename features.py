@@ -97,24 +97,24 @@ def sound():
     last_val = [0, 0, 0]
     while True:
         l,data = inp.read()
-        samples = np.fromstring(data, dtype=np.int16)
+        samples = np.absolute(np.fromstring(data, dtype=np.int16))
         print(samples)
-        b_samp = list(filter(lambda a: a > 700, samples))
-        c_samp = list(filter(lambda a: 50 < a < 200, samples))
+        b_samp = list(filter(lambda a: a > 200, samples))
+        c_samp = list(filter(lambda a: 100 < a < 200, samples))
         if l:
             a = audioop.max(data, 2)
             a = exp_fn(last_val[0], a, t, tau)
             last_val[0] = a
-            get_lit_more('red', min(1, a/1000))
+            get_lit_more('red', min(1, a/200))
             if len(b_samp) > 0 and len(c_samp) > 0:
-                b = np.mean(b_samp) - 700
+                b = np.mean(b_samp) - 200
                 b = exp_fn(last_val[1], a, t, tau)
                 last_val[1] = b
-                c = np.mean(c_samp) - 50
+                c = np.mean(c_samp) - 100
                 c = exp_fn(last_val[2], a, t, tau)
                 last_val[2] = c
                 pi.set_PWM_dutycycle(24, min(b/300, 1))
-                pi.set_PWM_dutycycle(25, c/150)
+                pi.set_PWM_dutycycle(25, c/100)
         time.sleep(t)
 
 def exp_fn(prev, curr, t, tau):
