@@ -44,6 +44,11 @@ body {
 /**
  * button functions
  */
+ #button-on {
+    background: white;
+    display: flex;
+    justify-content: center;
+ }
  #button-off {
     background: white;
     display: flex;
@@ -72,6 +77,19 @@ body {
     left: 50%;
     transform: translate(-50%, -200%)
 }
+
+.function-button.inactive {
+    border: 2px solid #2f353f;
+    color: #2f353f;
+}
+.function-button.inactive:hover {
+    opacity: 0.6;
+}
+.function-button.active {
+    border: 2px solid #2f353f;
+    background: #2f353f;
+    color: white;
+}
  .function-button {
     width: 124px;
     height: 60px;
@@ -80,8 +98,8 @@ body {
     -moz-border-radius: 12px;
     -webkit-border-radius: 12px;
     border-radius: 12px;
-    border: 5px solid rgba(255, 255, 255, 0.2);
     transition: transform ease 0.2s;
+    border: 2px solid #2f353f;
 }
 .function-button:hover {
     transform: scale(1.2);
