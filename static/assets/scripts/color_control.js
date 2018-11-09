@@ -353,6 +353,44 @@ function multiButtonClicked() {
 }
 document.getElementById("button-multi").onclick = multiButtonClicked;	
 
+
+
+
+
+
+
+$(document).ready(function()  {
+	$(".function-button").click(function() {
+
+		let buttonName = $(this).text();
+		let buttonActive = $(this).hasClass("active");
+		console.log(buttonName);
+		
+		if (!buttonActive) {
+			$(this).addClass("active");
+			$(this).removeClass("inactive");
+
+			// YOUR CODE HERE - PART 2.2
+			$(document.getElementsByClassName(buttonName)).show();
+
+		} else {
+			$(this).addClass("inactive");
+			$(this).removeClass("active");
+
+			// YOUR CODE HERE - PART 2.2
+			$(document.getElementsByClassName(buttonName)).hide();
+
+		}
+	});
+});
+
+
+
+
+
+
+
+
 // LO TIME
 var p1 = document.getElementById("lo"),
     res1 = document.getElementById("result1");
