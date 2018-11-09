@@ -108,10 +108,10 @@ def sound():
             get_lit_more('red', min(1, a/1000))
             if len(b_samp) > 0 and len(c_samp) > 0:
                 b = np.mean(b_samp) - 700
-                b = exp_fn(last_val[0], a, t, tau)
+                b = exp_fn(last_val[1], a, t, tau)
                 last_val[1] = b
                 c = np.mean(c_samp) - 50
-                c = exp_fn(last_val[0], a, t, tau)
+                c = exp_fn(last_val[2], a, t, tau)
                 last_val[2] = c
                 pi.set_PWM_dutycycle(24, min(b/300, 1))
                 pi.set_PWM_dutycycle(25, c/150)
