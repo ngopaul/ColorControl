@@ -4,9 +4,11 @@ import sys
 import math
 import pigpio, alsaaudio, time, audioop
 from struct import *
+import numpy as np
+
 
 card = 'sysdefault:CARD=Microphone'
-inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE,alsaaudio.PCM_NONBLOCK, 'sysdefault:CARD=1')
+inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE,alsaaudio.PCM_NONBLOCK,device="hw:1") #'sysdefault:CARD=1')
 inp.setchannels(0)
 inp.setrate(8000)
 inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
@@ -90,12 +92,24 @@ def multi_breathe(colors, length, lo_time):
         time.sleep(lo_time/1000)
 
 def sound():
+    last_val = 0
     while True:
         l,data = inp.read()
+        samples = np.fromstring(data, dtype=np.uint16)
+        print(samples)
+        new_samp = list(filter(lambda a: 700 < a < 1000, samples))
+        c_samp = list(filter(lambda a: 400 < a < 700, samples))
         if l:
             a = audioop.max(data, 2)
-            #print(a)
-            get_lit_more('white', min(1, a/1000))
+            if a < last_val:
+                a = (a + 2 * last_val)//3
+            #get_lit_more('red', min(1, a/1000))
+            if len(new_samp) > 0 and len(c_samp) > 0:
+                b = np.mean(new_samp) - 700
+                c = np.mean(c_samp) - 400
+                pi.set_PWM_dutycycle(24, b/300)
+                pi.set_PWM_dutycycle(25, c/300)
+            last_val = a
         time.sleep(.001)
 
 if __name__ == '__main__':

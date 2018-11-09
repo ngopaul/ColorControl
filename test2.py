@@ -3,7 +3,7 @@ import aubio
 import numpy as np
 import matplotlib.pyplot as plt
 
-samplerate = 8000
+samplerate = 16000 #8000
 win_s = 2048
 hop_s = win_s // 2
 framesize = hop_s
@@ -27,7 +27,10 @@ pitcher = aubio.pitch("default", win_s, hop_s, samplerate)
 pitcher.set_unit("Hz")
 #pitcher.set_silence(-40)
 
+#plt.ion()
+
 while True:
+    #plt.clf()
     try:
         _, data = inp.read()
         #print(data)
@@ -47,17 +50,20 @@ while True:
         #print(audioop.max(data[0:length//3], 2), audioop.max(data[length//3:2*length//3+1],2), audioop.max(data[2*length//3:length-1],2))
         #print(samples[20:30])
         count = 0
-        new_samp = list(filter(lambda a: a < 300, samples))
+        new_samp = list(filter(lambda a: a, samples))
         print(new_samp[100:200])
         #freq = pitcher(new_samp)[0]
         #energy = np.sum(new_samp**2)/len(new_samp)
         #print(freq, energy)
         #print(np.fft.rfft(samples))
         #print("got np")
+        print('plotting')
         plt.plot(new_samp)
-        print(abs(audioop.max(data[0:length//3],2) - audioop.max(data[length//3:2*length//3+1],2)))
-    except KeyboardInterrupt:
+        #plt.draw()
         plt.show()
+        #print(abs(audioop.max(data[0:length//3],2) - audioop.max(data[length//3:2*length//3+1],2)))
+    except KeyboardInterrupt:
+        #plt.show()
         break
     except ValueError:
         pass
