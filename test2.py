@@ -56,6 +56,7 @@ while True:
         #print(samples[20:30])
         count = 0
         new_samp = list(filter(lambda a: a, samples))
+        print(len(new_samp))
         print(new_samp[100:200])
         #freq = pitcher(new_samp)[0]
         #energy = np.sum(new_samp**2)/len(new_samp)
