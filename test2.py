@@ -34,9 +34,14 @@ while True:
     try:
         _, data = inp.read()
         #print(data)
-        samples = np.fromstring(data, dtype=np.uint16) #dtype=aubio.float_type)
+        samples = np.fromstring(data, dtype=np.int16) #dtype=aubio.float_type)
         if len(samples) == 0:
             continue
+        w = np.fft.fft(samples)
+        freqs = np.fft.fftfreq(len(samples))
+        freq_to_strength = np.column_stack((np.transpose(list(map(lambda x: abs(x*frate), freqs))), np.transpose(np.abs(w))))
+        fts = freq_to_strength[freq_to_strength[:,0].argsort()]
+        plt.plot(fts[:,:1], fts[:,1:2])
         #print(samples[10:20])
         #print("len samples != 0")
         #freq = pitcher(samples)[0]
@@ -58,7 +63,7 @@ while True:
         #print(np.fft.rfft(samples))
         #print("got np")
         print('plotting')
-        plt.plot(new_samp)
+        # plt.plot(new_samp)
         #plt.draw()
         plt.show()
         #print(abs(audioop.max(data[0:length//3],2) - audioop.max(data[length//3:2*length//3+1],2)))
