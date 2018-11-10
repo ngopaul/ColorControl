@@ -39,6 +39,7 @@ while True:
             continue
         w = np.fft.fft(samples)
         freqs = np.fft.fftfreq(len(samples))
+        frate = 4
         freq_to_strength = np.column_stack((np.transpose(list(map(lambda x: abs(x*frate), freqs))), np.transpose(np.abs(w))))
         fts = freq_to_strength[freq_to_strength[:,0].argsort()]
         plt.plot(fts[:,:1], fts[:,1:2])
