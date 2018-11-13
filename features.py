@@ -10,7 +10,8 @@ from math import *
 card = 'sysdefault:CARD=Microphone'
 inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE,alsaaudio.PCM_NONBLOCK,device="hw:1") #'sysdefault:CARD=1')
 inp.setchannels(0)
-inp.setrate(8000)
+#inp.setrate(8000)
+inp.setrate(16000)
 inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
 inp.setperiodsize(160)
 max_value = 0
@@ -99,24 +100,26 @@ def sound():
         l,data = inp.read()
         samples = np.absolute(np.fromstring(data, dtype=np.int16))
         # print(samples)
-        b_samp = list(filter(lambda a: 100 < a < 200, samples))
-        c_samp = list(filter(lambda a: 50 < a < 100, samples))
+        # b_samp = list(filter(lambda a: 100 < a < 200, samples))
+        # c_samp = list(filter(lambda a: 50 < a < 100, samples))
         if l:
-            a = audioop.max(data, 2)
-            a = exp_fn(last_val[0], a, t, tau)
+            a = audioop.max(data, 2) # - 100
+            # a = exp_fn(last_val[0], a, t, tau)
+            # last_val[0] = a
+            # print(a)
+            if a == 0 and last_val[0] == 0 or a > 0:
+                get_lit_more('white', min(1, a/10000))
             last_val[0] = a
-            print(a)
-            get_lit_more('red', min(1, a/200))
-            if len(b_samp) > 0 and len(c_samp) > 0:
-                b = np.mean(b_samp) - 100
-                b = exp_fn(last_val[1], a, t, tau)
-                last_val[1] = b
-                c = np.mean(c_samp) - 50
-                c = exp_fn(last_val[2], a, t, tau)
-                last_val[2] = c
-                print(b, c)
-                pi.set_PWM_dutycycle(24, min(255, b * 255/50))
-                pi.set_PWM_dutycycle(25, min(255, c * 255/50))
+            #if len(b_samp) > 0 and len(c_samp) > 0:
+            #    b = np.mean(b_samp) - 100
+            #    b = exp_fn(last_val[1], a, t, tau)
+            #    last_val[1] = b
+            #    c = np.mean(c_samp) - 50
+            #    c = exp_fn(last_val[2], a, t, tau)
+            #    last_val[2] = c
+            #    print(b, c)
+            #    pi.set_PWM_dutycycle(24, min(255, b * 255/50))
+            #    pi.set_PWM_dutycycle(25, min(255, c * 255/50))
         time.sleep(t)
 
 def exp_fn(prev, curr, t, tau):

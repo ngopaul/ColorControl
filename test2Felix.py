@@ -27,9 +27,11 @@ pitcher = aubio.pitch("default", win_s, hop_s, samplerate)
 pitcher.set_unit("Hz")
 #pitcher.set_silence(-40)
 
-plt.ion()
+#plt.ion()
+frate = samplerate
 
 while True:
+    #plt.clf()
     try:
         _, data = inp.read()
         #print(data)
@@ -38,11 +40,9 @@ while True:
             continue
         w = np.fft.fft(samples)
         freqs = np.fft.fftfreq(len(samples))
-        frate = samplerate
         freq_to_strength = np.column_stack((np.transpose(list(map(lambda x: abs(x*frate), freqs))), np.transpose(np.abs(w))))
         fts = freq_to_strength[freq_to_strength[:,0].argsort()]
-        plt.clf()
-        plt.plot(fts[200:7000,:1], fts[200:7000,1:2])
+        plt.plot(fts[:,:1], fts[:,1:2])
         #print(samples[10:20])
         #print("len samples != 0")
         #freq = pitcher(samples)[0]
@@ -57,7 +57,6 @@ while True:
         #print(samples[20:30])
         count = 0
         new_samp = list(filter(lambda a: a, samples))
-        print(len(new_samp))
         print(new_samp[100:200])
         #freq = pitcher(new_samp)[0]
         #energy = np.sum(new_samp**2)/len(new_samp)
@@ -67,11 +66,11 @@ while True:
         print('plotting')
         # plt.plot(new_samp)
         #plt.draw()
+        plt.show()
         #print(abs(audioop.max(data[0:length//3],2) - audioop.max(data[length//3:2*length//3+1],2)))
     except KeyboardInterrupt:
-        plt.show(block = True)
+        #plt.show()
         break
     except ValueError:
         pass
-    plt.pause(0.01)
     time.sleep(0.01)
