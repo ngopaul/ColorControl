@@ -32,13 +32,14 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<link rel="stylesheet" type="text/css" href="../static/assets/styles/style.css" />
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	</head>
 	<body>
 		<form action="" method="POST">
 			<!-- <input type="text" name="scname" id="scname">
 			<input type="hidden" name="secret" id="secret" value="shhh"> -->
-			<input type="button" value="Check Current Light Status" onclick="return loadXMLDoc()">
+			<!--<input type="button" value="Check Current Light Status" onclick="return loadXMLDoc()"> -->
 		</form>
 		<div id="currentState"></div>
 		<div id="currentColor"></div>
@@ -90,26 +91,61 @@
 				<div id="button-aqua" class="button" value="0" onclick="takeColor('aqua')"></div>			
 				<div id="button-pink" class="button" value="0" onclick="takeColor('pink')"></div>
 			</div>
-			<div id="lo-time-name">Low Time</div>
-			<p id="result1"></p>
+			<!-- <div id="lo-time-name">Low Time</div> -->
+			<!-- <p id="result1"></p>
 			<div id="lo-time">
 				<form action="#">
 					<p class="range-field">
 					  	<input type="range" id="lo" min="10" max="1000"/>
 					</p>
 				</form>
-			</div>
-			<div id="hi-time-name">High Time</div>
-			<p id="result2"></p>
+			</div> -->
+			<!-- <div id="hi-time-name">High Time</div> -->
+			<!-- <p id="result2"></p>
 			<div id="hi-time">
 				<form action="#">
 					<p class="range-field">
 						<input type="range" id="hi" min="10" max="1000"/>
 					</p>
 				</form>
-			</div>
+			</div> -->
+			  <nav>
+				<div class="nav-wrapper">
+				  <form>
+					<div class="input-field">
+					  <input id="search" type="search" required>
+					  <label class="label-icon" for="search"><i>Low Time</i></label>
+					  <i class="material-icons">close</i>
+					</div>
+				  </form>
+				</div>
+			  </nav>
+			  <nav>
+				<div class="nav-wrapper">
+				  <form>
+					<div class="input-field">
+					  <input id="search" type="search" required>
+					  <label class="label-icon" for="search"><i>Hi Time</i></label>
+					  <i class="material-icons">close</i>
+					</div>
+				  </form>
+				</div>
+			  </nav>
+			  <nav>
+				<div class="nav-wrapper">
+				  <form>
+					<div class="input-field">
+					  <input id="search" type="search" required>
+					  <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+					  <i class="material-icons">close</i>
+					</div>
+				  </form>
+				</div>
+			  </nav>
 		</div>
 		<!-- would usually put the <script> in <head> -->
 		<script type="text/javascript" src="../static/assets/scripts/color_control.js"></script>
+		<script type="text/javascript" src="../static/assets/scripts/materialize.js"></script>
+		
 	</body>
 </html>

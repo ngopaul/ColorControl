@@ -302,6 +302,7 @@ document.getElementById("button-purple").onclick = purpleButtonClicked;
 function offButtonClicked() {
     console.log("off");
     send_data("off");
+    
 }
 document.getElementById("button-off").onclick = offButtonClicked;	
 
@@ -354,12 +355,34 @@ function multiButtonClicked() {
 document.getElementById("button-multi").onclick = multiButtonClicked;	
 
 // FUNCTION BUTTON
+// $(document).ready(function()  {
+// 	$(".function-button").click(function() {
+
+// 		let buttonName = $(this).text();
+// 		let buttonActive = $(this).hasClass("active");
+//         console.log(buttonName);
+//         $(".function-button").addClass("inactive");
+		
+// 		if (!buttonActive) {
+// 			$(this).addClass("active");
+// 			$(this).removeClass("inactive");
+// 			$(document.getElementsByClassName(buttonName)).show();
+
+// 		} else {
+// 			$(this).addClass("inactive");
+// 			$(this).removeClass("active");
+// 			$(document.getElementsByClassName(buttonName)).hide();
+
+// 		}
+// 	});
+// });
 $(document).ready(function()  {
 	$(".function-button").click(function() {
 
 		let buttonName = $(this).text();
 		let buttonActive = $(this).hasClass("active");
-		console.log(buttonName);
+        console.log(buttonName);
+        $(".function-button").removeClass("active");
 		
 		if (!buttonActive) {
 			$(this).addClass("active");
