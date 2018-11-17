@@ -399,22 +399,30 @@ $(document).ready(function()  {
 });
 
 // LO TIME
-var p1 = document.getElementById("lo"),
-    res1 = document.getElementById("result1");
+// var p1 = document.getElementById("lo"),
+//     res1 = document.getElementById("result1");
 
-p1.addEventListener("input", function() {
-    res1.innerHTML = p1.value;
-    console.log(p1.value);
-    }, false); 
+// p1.addEventListener("input", function() {
+//     res1.innerHTML = p1.value;
+//     console.log(p1.value);
+//     }, false); 
 
-// HI TIME
-var p2 = document.getElementById("hi"),
-    res2 = document.getElementById("result2");
+// // HI TIME
+// var p2 = document.getElementById("hi"),
+//     res2 = document.getElementById("result2");
 
-p2.addEventListener("input", function() {
-    res2.innerHTML = p2.value;
-    console.log(p2.value);
-    }, false); 
+// p2.addEventListener("input", function() {
+//     res2.innerHTML = p2.value;
+//     console.log(p2.value);
+//     }, false); 
+
+
+function myFunction() {
+    var x = document.getElementById("frm1");
+    console.log(x.elements[0].value);
+    console.log(x.elements[1].value);
+    send_data("", [x.elements[0].value, x.elements[1].value])
+}
 
 
 // SEND DATA
