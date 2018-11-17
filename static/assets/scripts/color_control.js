@@ -421,7 +421,7 @@ function myFunction() {
     var x = document.getElementById("frm1");
     console.log(x.elements[0].value);
     console.log(x.elements[1].value);
-    send_data("", [x.elements[0].value, x.elements[1].value])
+    send_data(, [x.elements[0].value, x.elements[1].value])
 }
 
 
