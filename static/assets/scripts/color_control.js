@@ -392,9 +392,12 @@ $(document).ready(function()  {
 		} else {
 			$(this).addClass("inactive");
 			$(this).removeClass("active");
-			$(document.getElementsByClassName(buttonName)).hide();
-
-		}
+            $(document.getElementsByClassName(buttonName)).hide();
+        }
+        var x = document.getElementById("frm1");
+        console.log(buttonName);
+        console.log([x.elements[0].value, x.elements[1].value]);
+        send_data(buttonName, [x.elements[0].value, x.elements[1].value], []);
 	});
 });
 
@@ -421,7 +424,7 @@ function myFunction() {
     var x = document.getElementById("frm1");
     console.log(x.elements[0].value);
     console.log(x.elements[1].value);
-    send_data(, [x.elements[0].value, x.elements[1].value])
+    // send_data(, [x.elements[0].value, x.elements[1].value])
 }
 
 
@@ -479,10 +482,10 @@ function loadXMLDoc() {
     return false
 }
 
-// drag bar
-$(document).ready(function() {
-    M.updateTextFields();
-  });
+// // drag bar
+// $(document).ready(function() {
+//     M.updateTextFields();
+// });
 
 // multi function
 function multi_color(color) {
