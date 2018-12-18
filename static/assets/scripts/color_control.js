@@ -302,7 +302,7 @@ document.getElementById("button-purple").onclick = purpleButtonClicked;
 function offButtonClicked() {
     console.log("off");
     send_data("off");
-    
+    location.reload();
 }
 document.getElementById("button-off").onclick = offButtonClicked;	
 
@@ -310,11 +310,11 @@ document.getElementById("button-off").onclick = offButtonClicked;
 function onButtonClicked() {
     console.log("on");
     if (multi_clicked == true) {
-        send_data("multi on", [200, 200], light_colors);
+        send_data("multi on", x.elements[0].value.toString() + x.elements[1].value.toString(), light_colors);
         console.log("Reloading webpage...");
         location.reload();
     } else {
-        send_data("on", [200, 200]);
+        send_data("on", x.elements[0].value.toString() + x.elements[1].value.toString());
     }
 }
 document.getElementById("button-on").onclick = onButtonClicked;	
@@ -323,11 +323,11 @@ document.getElementById("button-on").onclick = onButtonClicked;
 function flashButtonClicked() {
     console.log("flash");
     if (multi_clicked == true) {
-        send_data("multi flash", "500,500", light_colors);
+        send_data("multi flash", x.elements[0].value.toString() + x.elements[1].value.toString(), light_colors);
         console.log("Reloading webpage...");
         location.reload();
     } else {
-        send_data("flash", "500,500");
+        send_data("flash", x.elements[0].value.toString() + x.elements[1].value.toString());
     }
     console.log("fsd");
 }
@@ -337,11 +337,11 @@ document.getElementById("button-flash").onclick = flashButtonClicked;
 function breatheButtonClicked() {
     console.log("breathe");
     if (multi_clicked == true) {
-        send_data("multi breathe", "2000,2000", light_colors);
+        send_data("multi breathe", x.elements[0].value.toString() + x.elements[1].value.toString(), light_colors);
         console.log("Reloading webpage...");
         location.reload();
     } else {
-        send_data("breathe", "2000,2000");
+        send_data("breathe", x.elements[0].value.toString() + x.elements[1].value.toString());
     }
 }
 document.getElementById("button-breathe").onclick = breatheButtonClicked;	
@@ -419,13 +419,20 @@ $(document).ready(function()  {
 //     console.log(p2.value);
 //     }, false); 
 
-
-function myFunction() {
-    var x = document.getElementById("frm1");
-    console.log(x.elements[0].value);
-    console.log(x.elements[1].value);
-    // send_data(, [x.elements[0].value, x.elements[1].value])
-}
+// $(document).ready(function()  {
+//     var myFunction = function() { 
+//     var x = document.getElementById("frm1");
+//     console.log(x.elements[0].value);
+//     console.log(x.elements[1].value);
+//     send_data($(this).text(), [x.elements[0].value, x.elements[1].value])
+//     };
+// });
+// function myFunction() {
+//     var x = document.getElementById("frm1");
+//     console.log(x.elements[0].value);
+//     console.log(x.elements[1].value);
+//     send_data(this.text, [x.elements[0].value, x.elements[1].value]);
+// }
 
 
 // SEND DATA
