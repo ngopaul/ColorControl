@@ -308,6 +308,7 @@ document.getElementById("button-off").onclick = offButtonClicked;
 
 // ON
 function onButtonClicked() {
+    var x = document.getElementById("frm1");
     console.log("on");
     if (multi_clicked == true) {
         send_data("multi on", x.elements[0].value.toString() + x.elements[1].value.toString(), light_colors);
@@ -321,6 +322,7 @@ document.getElementById("button-on").onclick = onButtonClicked;
 
 //  FLASH
 function flashButtonClicked() {
+    var x = document.getElementById("frm1");
     console.log("flash");
     if (multi_clicked == true) {
         send_data("multi flash", x.elements[0].value.toString() + x.elements[1].value.toString(), light_colors);
@@ -335,6 +337,7 @@ document.getElementById("button-flash").onclick = flashButtonClicked;
 
 //  BREATHE
 function breatheButtonClicked() {
+    var x = document.getElementById("frm1");
     console.log("breathe");
     if (multi_clicked == true) {
         send_data("multi breathe", x.elements[0].value.toString() + x.elements[1].value.toString(), light_colors);
