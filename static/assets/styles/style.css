@@ -11,19 +11,26 @@ body {
     transition: background-color ease 0.5s;
     background-color: #ccc;
 }
+#header {
+    display: flex;
+    position: absolute;
+    left: 34%;
+    top: 4%;
+    font-size: 500%;
+}
 
 #spine-1 {
     display: flex;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 57.58%;
     transform: translate(-50%, -100%);
 }
 #spine-2 {
     display: flex;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 57.58%;
     transform: translate(-50%, 0%);
 }
 
@@ -101,60 +108,9 @@ body {
     cursor: pointer;
 }
 
-/* #lo-time {
-    display: flex;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-125%, 300%)
-}
-#lo-time-name {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-200%, 1000%)
-}
-#result1 {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-440%, 1050%)
-}
-
-#hi-time {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(25%, 300%)
-}
-#hi-time-name {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(95%, 1000%)
-}
-#result2 {
-    display: flex;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(350%, 1050%)
-} */
-
-
-
-
-
-
-
 /**
  * colors
  */
-
 #button-red {
     background: #EF476F;
 }
@@ -200,3 +156,36 @@ body {
     transition: transform ease 0.2s; 
 }
 
+/* TIME INPUT */
+/* #hi {
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+
+    display: flex;
+    position: absolute;
+    top: 40%;
+    left: 20%;
+}
+#lo {
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+} */
+#frm1 {
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    display: flex;
+    position: absolute;
+    top: 35.2%;
+    left: 19%;
+}
+#frm1 input {
+    width: 72px;
+}
