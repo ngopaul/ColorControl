@@ -2,18 +2,19 @@ from app import clear_lights, return_colors, parse_multi_colors
 import time
 import sys
 import math
-import pigpio, alsaaudio, time, audioop
+import pigpio, time
+#import alsaaudio, audioop
 from struct import *
 import numpy as np
 from math import *
 
 card = 'sysdefault:CARD=Microphone'
-inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE,alsaaudio.PCM_NONBLOCK,device="hw:1") #'sysdefault:CARD=1')
-inp.setchannels(0)
+#inp = alsaaudio.PCM(alsaaudio.PCM_CAPTURE,alsaaudio.PCM_NONBLOCK,device="hw:1") #'sysdefault:CARD=1')
+#inp.setchannels(0)
 #inp.setrate(8000)
-inp.setrate(16000)
-inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
-inp.setperiodsize(160)
+#inp.setrate(16000)
+#inp.setformat(alsaaudio.PCM_FORMAT_S16_LE)
+#inp.setperiodsize(160)
 max_value = 0
 
 pi = pigpio.pi()
@@ -93,6 +94,7 @@ def multi_breathe(colors, length, lo_time):
         time.sleep(lo_time/1000)
 
 def sound():
+    return
     t = 0.001
     tau = 0.0005
     last_val = [0, 0, 0]
