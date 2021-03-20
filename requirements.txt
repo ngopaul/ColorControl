@@ -19,7 +19,7 @@ gpiozero==1.4.0
 idna==2.2
 ipaddress==1.0.17
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2==2.11.3
 keyring==10.1
 keyrings.alt==1.3
 lxkeymap==0.1
