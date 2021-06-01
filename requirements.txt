@@ -71,6 +71,6 @@ spidev==3.3
 subprocess32==3.2.7
 touchphat==0.0.1
 twython==3.4.0
-urllib3==1.19.1
+urllib3==1.26.5
 Werkzeug==0.14.1
 wicd==1.7.4
